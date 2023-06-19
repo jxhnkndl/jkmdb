@@ -2,7 +2,11 @@
 module.exports = {
   // paths to all component files
   content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  theme: {},
+  theme: {
+    container: {
+      center: true
+    }
+  },
   daisyui: {
     themes: ["halloween", "dracula", "winter"]
   },

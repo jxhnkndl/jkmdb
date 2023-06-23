@@ -3,7 +3,7 @@ import React from 'react';
 function Home() {
   return (
     <div>
-      <p className="text-5xl">TRENDING TITLES</p>
+      <p className="text-3xl">HOME PAGE</p>
     </div>
   );
 }

@@ -19,6 +19,8 @@ export const MovieProvider = ({ children }) => {
   const initialState = {
     tvShows: [],
     movies: [],
+    searchResults: [],
+    searchTerm: '',
     loading: false,
   };
 

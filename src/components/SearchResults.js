@@ -24,7 +24,7 @@ function SearchResults({ limit, data }) {
 // validate props
 SearchResults.propTypes = {
   limit: PropTypes.number,
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array,
 }
 
 export default SearchResults;

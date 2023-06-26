@@ -21,6 +21,19 @@ const movieReducer = (state, action) => {
         movies: action.payload,
         loading: false
       }
+    
+    case 'SEARCH_TITLES':
+      return {
+        ...state,
+        searchResults: action.payload,
+        loading: false
+      }
+
+    case 'SET_SEARCH_TERM': 
+      return {
+        ...state,
+        searchTerm: action.payload
+      }
 
     case 'RESET_LOADING':
       return {

@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import SearchResults from '../components/SearchResults';
 import MovieContext from '../context/movie/MovieContext';
-import endpoints from '../utils/apiEndpoints';
 
 function Home() {
   const { tvShows, movies, loading, dispatch, fetchData } =
@@ -13,8 +12,12 @@ function Home() {
       // update api loading state to true
       dispatch({ type: 'SET_LOADING' });
 
-      const tvShows = await fetchData(endpoints.trendingTv);
-      const movies = await fetchData(endpoints.trendingMovies);
+      const tvShows = await fetchData(
+        `/trending/tv/day?language=en-US&pages=5`
+      );
+      const movies = await fetchData(
+        `/trending/movie/day?language=en-US&pages=5`
+      );
 
       // update state with response data from both api calls
       dispatch({
@@ -33,7 +36,9 @@ function Home() {
 
   return (
     <div>
-      {tvShows.length > 0 && movies.length > 0 ? (
+      {loading ? (
+        <p className="text-3xl">LOADING...</p>
+      ) : (
         <section>
           <div className="my-10">
             <p className="text-4xl mb-4">Trending TV</p>
@@ -44,8 +49,6 @@ function Home() {
             <SearchResults limit={5} data={movies} />
           </div>
         </section>
-      ) : (
-        <p className="text-3xl">LOADING DATA</p>
       )}
     </div>
   );

@@ -12,7 +12,7 @@ function App() {
     <Router>
       <div className="min-h-screen flex flex-col justify-between">
         <Header />
-        <main className="container px-4 md:px-0">
+        <main className="container px-4 md:px-0 lg:px-4">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/trending-tv" element={<TrendingTV />} />

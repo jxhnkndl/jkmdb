@@ -33,17 +33,19 @@ function Home() {
 
   return (
     <div>
-      {tvShows.length >= 0 && movies.length >= 0 && (
+      {tvShows.length > 0 && movies.length > 0 ? (
         <section>
           <div className="my-10">
             <p className="text-4xl mb-4">Trending TV</p>
-            <SearchResults />
+            <SearchResults limit={5} data={tvShows} />
           </div>
           <div className="my-10">
             <p className="text-4xl mb-4">Trending Movies</p>
-            <SearchResults />
+            <SearchResults limit={5} data={movies} />
           </div>
         </section>
+      ) : (
+        <p className="text-3xl">LOADING DATA</p>
       )}
     </div>
   );

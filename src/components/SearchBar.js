@@ -1,35 +1,36 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import MovieContext from '../context/movie/MovieContext';
 
 function SearchBar() {
-  const [text, setText] = useState('');
-
-  // route history
-  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { dispatch, fetchData } = useContext(MovieContext);
 
   // handle input change
   const handleChange = (event) => {
-    setText(event.target.value);
+    setSearchTerm(event.target.value);
   };
 
   // handle search submit
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    dispatch({ type: 'SET_LOADING' });
+
     const searchResults = await fetchData(
-      `/search/multi?query=${text}&include_adult=false&language=en-US&page=1`
+      `/search/multi?query=${searchTerm}&include_adult=false&language=en-US&page=1`
     );
 
     // update search term in global state
     dispatch({
       type: 'SEARCH_TITLES',
-      payload: searchResults,
+      payload: {
+        searchTerm,
+        searchResults,
+      },
     });
 
-    setText('');
+    setSearchTerm('');
   };
 
   return (
@@ -38,7 +39,7 @@ function SearchBar() {
         type="text"
         placeholder="TV Shows, Movies, People"
         className="input w-full mr-2"
-        value={text}
+        value={searchTerm}
         onChange={handleChange}
       />
       <button className="btn btn-primary" type="submit">

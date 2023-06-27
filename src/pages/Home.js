@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { BiArrowBack } from 'react-icons/bi';
 import SearchResults from '../components/SearchResults';
 import MovieContext from '../context/movie/MovieContext';
 
@@ -24,10 +23,10 @@ function Home() {
         dispatch({ type: 'SET_LOADING' });
 
         const tvShows = await fetchData(
-          `/trending/tv/day?language=en-US&pages=5`
+          `/trending/tv/day?language=en-US&page=1`
         );
         const movies = await fetchData(
-          `/trending/movie/day?language=en-US&pages=5`
+          `/trending/movie/day?language=en-US&page=1`
         );
 
         // update state with response data from both api calls

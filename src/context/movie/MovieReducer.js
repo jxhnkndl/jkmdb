@@ -7,20 +7,6 @@ const movieReducer = (state, action) => {
         movies: action.payload.movies,
         loading: false
       }
-
-    case 'GET_TRENDING_TV':
-      return {
-        ...state,
-        tvShows: action.payload,
-        loading: false
-      }
-
-    case 'GET_TRENDING_MOVIES':
-      return {
-        ...state,
-        movies: action.payload,
-        loading: false
-      }
     
     case 'SEARCH_TITLES':
       return {

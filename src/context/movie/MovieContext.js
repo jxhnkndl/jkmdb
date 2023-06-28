@@ -27,19 +27,28 @@ export const MovieProvider = ({ children }) => {
   // init movie reducer
   const [state, dispatch] = useReducer(movieReducer, initialState);
 
-  // fetch api data
-  const fetchData = async (endpoint) => {
-    const response = await tmdb.get(endpoint);
+  // fetch trending tv and movie data
+  const fetchTrending = async (endpoint) => {
+    const totalPages = 5;
+    let allResults = [];
 
-    return response.data.results;
-  } 
+    // request 5 pages worth of trending tv results (total 100 titles)
+    // combine all results into a single array
+    for (let page = 1; page <= totalPages; page++) {
+      const response = await tmdb.get(`${endpoint}&page=${page}`);
+
+      allResults = [...allResults, ...response.data.results];
+    }
+
+    return allResults;
+  };
 
   return (
     <MovieContext.Provider
       value={{
         ...state,
         dispatch,
-        fetchData
+        fetchTrending
       }}
     >
       {children}

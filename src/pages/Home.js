@@ -12,21 +12,21 @@ function Home() {
     searchTerm,
     loading,
     dispatch,
-    fetchData,
+    fetchTrending,
   } = useContext(MovieContext);
 
   useEffect(() => {
     if (display === 'trending') {
       // get trending tv and movie data from tmdb api when home page loads
-      const fetchTrending = async () => {
+      const initMovieState = async () => {
         // update api loading state to true
         dispatch({ type: 'SET_LOADING' });
 
-        const tvShows = await fetchData(
-          `/trending/tv/day?language=en-US&page=1`
+        const tvShows = await fetchTrending(
+          `/trending/tv/day?language=en-US`
         );
-        const movies = await fetchData(
-          `/trending/movie/day?language=en-US&page=1`
+        const movies = await fetchTrending(
+          `/trending/movie/day?language=en-US`
         );
 
         // update state with response data from both api calls
@@ -39,7 +39,7 @@ function Home() {
         });
       };
 
-      fetchTrending();
+      // initMovieState();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

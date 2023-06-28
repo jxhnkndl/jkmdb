@@ -19,8 +19,8 @@ function SearchResults({ limit, data }) {
 
   return (
     <div className="grid grid-cols-2 lg:grid-cols-5">
-      {results.map((result) => (
-        <ResultCard key={result.id} data={result} />
+      {results.map((result, index) => (
+        <ResultCard key={`${index}-${result.id}`} data={result} />
       ))}
     </div>
   );

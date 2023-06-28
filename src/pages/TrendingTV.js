@@ -12,7 +12,7 @@ function TrendingTV() {
       dispatch({ type: 'SET_LOADING' });
 
       const totalPages = 5;
-      let resultsArr;
+      let allTrendingTv = [];
 
       // request 5 pages worth of trending tv results (total 100 titles)
       for (let page = 1; page <= totalPages; page++) {
@@ -20,24 +20,17 @@ function TrendingTV() {
           `/trending/tv/day?language=en-US&page=${page}`
         );
 
-        // create single array with results from all 5 response pages
-        if (!resultsArr) {
-          resultsArr = [].concat(response);
-        } else {
-          resultsArr = resultsArr.concat(response);
-        }
+        allTrendingTv = [...allTrendingTv, ...response];
       }
 
-      // update trending tv state with full api response data
+      // update trending tv state with concatenated results
       dispatch({
         type: 'GET_TRENDING_TV',
-        payload: {
-          tvShows: resultsArr
-        },
-      });
+        payload: allTrendingTv
+      })
     };
 
-    fetchTrendingTv();
+    // fetchTrendingTv();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -49,7 +42,7 @@ function TrendingTV() {
       ) : (
         <section className="my-10">
           <div className="flex justify-between items-center">
-            <p className="text-4xl mb-4">Trending TV - Top 20</p>
+            <p className="text-4xl mb-4">Trending TV</p>
             <Link to="/">
               <button className="btn btn-circle btn-outline btn-sm mb-4 mr-4 md:max-lg:mr-16">
                 <svg
@@ -69,9 +62,7 @@ function TrendingTV() {
               </button>
             </Link>
           </div>
-          {/* concatenating the multiple api responses pages created an object
-              with a tvShows property containing the array of show data */}
-          {tvShows.tvShows.length > 0 && <SearchResults data={tvShows.tvShows} />}
+          {tvShows.length > 0 && <SearchResults data={tvShows} />}
         </section>
       )}
     </div>

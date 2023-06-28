@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { BiSolidRightArrow } from 'react-icons/bi';
 import SearchResults from '../components/SearchResults';
 import MovieContext from '../context/movie/MovieContext';
 
@@ -22,9 +24,7 @@ function Home() {
         // update api loading state to true
         dispatch({ type: 'SET_LOADING' });
 
-        const tvShows = await fetchTrending(
-          `/trending/tv/day?language=en-US`
-        );
+        const tvShows = await fetchTrending(`/trending/tv/day?language=en-US`);
         const movies = await fetchTrending(
           `/trending/movie/day?language=en-US`
         );
@@ -71,7 +71,10 @@ function Home() {
               and there are no search results to show */}
           {tvShows.length > 0 && searchResults.length === 0 && (
             <div className="my-10">
-              <p className="text-4xl mb-4">Trending TV</p>
+              <Link to="/trending-tv" className='hover:text-primary'>
+                <p className="text-4xl mb-4 mr-3 inline">Trending TV</p>
+                <BiSolidRightArrow className="text-3xl mb-4 inline" />
+              </Link>
               <SearchResults limit={5} data={tvShows} />
             </div>
           )}
@@ -81,7 +84,10 @@ function Home() {
               are no search results to show */}
           {movies.length > 0 && searchResults.length === 0 && (
             <div className="my-10">
-              <p className="text-4xl mb-4">Trending Movies</p>
+              <Link to="/trending-movies" className='hover:text-primary'>
+                <p className="text-4xl mb-4 mr-3 inline">Trending Movies</p>
+                <BiSolidRightArrow className="text-3xl mb-4 inline" />
+              </Link>
               <SearchResults limit={5} data={movies} />
             </div>
           )}

@@ -43,12 +43,20 @@ export const MovieProvider = ({ children }) => {
     return allResults;
   };
 
+  // search by title
+  const searchByTitle = async (endpoint) => {
+    const response = await tmdb.get(endpoint);
+
+    return response.data.results;
+  }
+
   return (
     <MovieContext.Provider
       value={{
         ...state,
         dispatch,
-        fetchTrending
+        fetchTrending,
+        searchByTitle
       }}
     >
       {children}

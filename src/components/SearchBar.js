@@ -4,7 +4,7 @@ import MovieContext from '../context/movie/MovieContext';
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const { dispatch, fetchData } = useContext(MovieContext);
+  const { dispatch, searchByTitle } = useContext(MovieContext);
 
   // handle input change
   const handleChange = (event) => {
@@ -17,7 +17,7 @@ function SearchBar() {
 
     dispatch({ type: 'SET_LOADING' });
 
-    const searchResults = await fetchData(
+    const searchResults = await searchByTitle(
       `/search/multi?query=${searchTerm}&include_adult=false&language=en-US&page=1`
     );
 

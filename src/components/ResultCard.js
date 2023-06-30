@@ -16,7 +16,7 @@ function ResultCard({ display, data }) {
       className={`card flex flex-col justify-between mr-4 bg-base-200 shadow-xl mb-6 ${
         // determine sizing based on whether display mode is grid or row
         display === 'grid'
-          ? `w-auto md:w-80 lg:w-auto`
+          ? `w-auto lg:w-auto`
           : `shrink-0 w-40 lg:w-48`
       }`}
     >

@@ -1,25 +1,19 @@
 import React from 'react';
 import ResultCard from './ResultCard';
+import { filterResults, limitResults } from '../utils/helpers';
 
 function MovieContainer({ display, limit, data }) {
   // remove titles that don't have a poster for the
-  let filteredResults = data.filter(
-    (result) => result.poster_path && result.vote_average
-  );
+  let resultsArr = filterResults(data);
 
-  let results;
+  // limit results
+  let results = limitResults(resultsArr, limit);
 
-  // determine how many results to display based on limit prop
-  if (limit) {
-    results = filteredResults.slice(0, limit);
-  } else {
-    results = filteredResults;
-  }
-
-  console.log(results);
+  console.log(display)
 
   return (
     <section>
+      {/* if results should be in row, display this */}
       {display === 'row' && (
         <div className="flex overflow-x-auto whitespace-nowrap">
           {results.map((result, index) => (
@@ -32,11 +26,12 @@ function MovieContainer({ display, limit, data }) {
         </div>
       )}
 
+      {/* if results should be in grid, display this */}
       {display === 'grid' && (
-        <div className="grid grid-cols-2 lg:grid-cols-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           {results.map((result, index) => (
             <ResultCard
-              display={'row'}
+              display={'grid'}
               key={`${index}-${result.id}`}
               data={result}
             />

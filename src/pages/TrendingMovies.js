@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import SearchResults from '../components/SearchResults';
+import MovieContainer from '../components/MovieContainer'
 import MovieContext from '../context/movie/MovieContext';
 
 function TrendingMovies() {
@@ -15,7 +15,7 @@ function TrendingMovies() {
           <div className="flex justify-between items-center">
             <p className="text-4xl mb-4">Trending Movies</p>
             <Link to="/">
-              <button className="btn btn-circle btn-outline btn-sm mb-4 mr-4 md:max-lg:mr-16">
+              <button className="btn btn-circle btn-outline btn-sm mb-4 mr-">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
@@ -33,7 +33,7 @@ function TrendingMovies() {
               </button>
             </Link>
           </div>
-          {movies.length > 0 && <SearchResults data={movies} />}
+          {movies.length > 0 && <MovieContainer display={'grid'} data={movies} />}
         </section>
       )}
     </div>

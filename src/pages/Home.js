@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { BiSolidRightArrow } from 'react-icons/bi';
-import SearchResults from '../components/SearchResults';
+import MovieContainer from '../components/MovieContainer';
 import MovieContext from '../context/movie/MovieContext';
 
 function Home() {
@@ -37,9 +37,11 @@ function Home() {
             movies,
           },
         });
+
+        console.log(tvShows)
       };
 
-      // initMovieState();
+      initMovieState();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -75,7 +77,7 @@ function Home() {
                 <p className="text-4xl mb-4 mr-3 inline">Trending TV</p>
                 <BiSolidRightArrow className="text-3xl mb-4 inline" />
               </Link>
-              <SearchResults limit={5} data={tvShows} />
+              <MovieContainer display={'row'} limit={10} data={tvShows} />
             </div>
           )}
 
@@ -88,7 +90,7 @@ function Home() {
                 <p className="text-4xl mb-4 mr-3 inline">Trending Movies</p>
                 <BiSolidRightArrow className="text-3xl mb-4 inline" />
               </Link>
-              <SearchResults limit={5} data={movies} />
+              <MovieContainer display={'row'} limit={10} data={movies} />
             </div>
           )}
 
@@ -118,7 +120,7 @@ function Home() {
                   </svg>
                 </button>
               </div>
-              <SearchResults data={searchResults} />
+              <MovieContainer display={'grid'} data={searchResults} />
             </div>
           )}
         </section>

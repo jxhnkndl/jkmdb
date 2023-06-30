@@ -1,28 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { SiThemoviedatabase } from 'react-icons/si';
+import { setPercentRating, setRatingBadge } from '../utils/helpers';
 
-function ResultCard(result) {
-  const { poster_path, name, title, vote_average } = result.data;
+function ResultCard({ display, data }) {
+  const { poster_path, name, title, vote_average } = data;
 
   // convert rating into percentage
-  const percentRating = Math.floor(vote_average * 10);
+  const rating = setPercentRating(vote_average);
 
   // determine color of rating badge based on rating percentage
-  const setRatingBadge = () => {
-    if (percentRating >= 90) {
-      return 'badge-error';
-    } else if (percentRating < 90 && percentRating >= 80) {
-      return 'badge-accent';
-    } else if (percentRating < 80 && percentRating >= 60) {
-      return 'badge-warning';
-    } else if (percentRating < 60) {
-      return 'badge-info';
-    }
-  };
+  const ratingBadge = setRatingBadge(rating);
 
   return (
-    <div className="flex flex-col justify-between card w-auto md:w-80 lg:w-auto mr-4 bg-base-200 shadow-xl mb-6">
+    <div
+      className={`card flex flex-col justify-between mr-4 bg-base-200 shadow-xl mb-6 ${
+        // determine sizing based on whether display mode is grid or row
+        display === 'grid'
+          ? `w-auto md:w-80 lg:w-auto`
+          : `shrink-0 w-40 lg:w-48`
+      }`}
+    >
       <Link to="/">
         <figure>
           <img
@@ -33,12 +30,9 @@ function ResultCard(result) {
       </Link>
       <div className="pb-4">
         <div className="card-body py-2 px-4">
-          {/* tv shows = name, movies = title */}
           <h2 className="text-1xl truncate">{name || title}</h2>
         </div>
-        <div
-          className={`badge ${setRatingBadge()} ml-4`}
-        >{`${percentRating}%`}</div>
+        <div className={`badge ${ratingBadge} ml-4`}>{`${rating}%`}</div>
       </div>
     </div>
   );

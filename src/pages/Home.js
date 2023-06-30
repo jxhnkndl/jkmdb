@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { BiSolidRightArrow } from 'react-icons/bi';
 import MovieContainer from '../components/MovieContainer';
 import MovieContext from '../context/movie/MovieContext';
+import { formatSearchTerm } from '../utils/helpers';
 
 function Home() {
   const [display, setDisplay] = useState('trending');
@@ -53,15 +54,6 @@ function Home() {
     setDisplay('trending');
   };
 
-  // split search term into array, map through words, convert first letter
-  // of each word to uppercase for display, reattach to rest of the word
-  const formatSearchTerm = () => {
-    return searchTerm
-      .split(' ')
-      .map((term) => term.charAt(0).toUpperCase() + term.slice(1))
-      .join(' ');
-  };
-
   return (
     <div>
       {loading ? (
@@ -99,7 +91,7 @@ function Home() {
           {searchResults.length > 0 && (
             <div className="my-10">
               <div className="flex justify-between items-center">
-                <p className="text-4xl mb-4">{formatSearchTerm()}</p>
+                <p className="text-4xl mb-4">{formatSearchTerm(searchTerm)}</p>
                 <button
                   className="btn btn-circle btn-outline btn-sm mb-4 mr-4 md:max-lg:mr-16"
                   onClick={handleClear}

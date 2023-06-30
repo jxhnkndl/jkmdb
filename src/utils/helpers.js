@@ -1,3 +1,10 @@
+export const formatSearchTerm = (searchTerm) => {
+  return searchTerm
+    .split(' ')
+    .map((term) => term.charAt(0).toUpperCase() + term.slice(1))
+    .join(' ');
+};
+
 // filter out titles without a poster path or vote average
 export const filterResults = (resultsArr) => {
   return resultsArr.filter(

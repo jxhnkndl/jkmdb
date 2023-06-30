@@ -14,7 +14,7 @@ export const filterResults = (resultsArr) => {
 
 // limit results
 export const limitResults = (data, limit) => {
-  let results; 
+  let results;
 
   if (limit) {
     results = data.slice(0, limit);
@@ -23,20 +23,45 @@ export const limitResults = (data, limit) => {
   }
 
   return results;
-}
+};
 
 // calculate rating percentage
 export const setPercentRating = (voteAvg) => Math.floor(voteAvg * 10);
 
 // create rating badge based on rating percentage
-export const setRatingBadge = (rating) => {
+export const setRatingColor = (rating, type) => {
   if (rating >= 90) {
-    return 'badge-error';
+    if (type === 'badge') return 'badge-error';
+    else return 'text-error';
+
   } else if (rating < 90 && rating >= 80) {
-    return 'badge-accent';
+    if (type === 'badge') return 'badge-accent';
+    else return 'text-accent';
+
   } else if (rating < 80 && rating >= 60) {
-    return 'badge-warning';
+    if (type === 'badge') return 'badge-warning';
+    else return 'text-warning';
+
   } else if (rating < 60) {
-    return 'badge-info';
+    if (type === 'badge') return 'badge-info';
+    else return 'text-info';
   }
+};
+
+// format air date string for movie details display
+export const formatAirDates = (debutYear, endYear) => {
+  let startDate = debutYear.split('-')[0];
+  let latestDate = endYear.split('-')[0];
+
+  return `${startDate}-${latestDate}`;
+};
+
+// format genre string
+export const createGenres = (genreArr) => {
+  return genreArr.map(genre => genre.name);
+};
+
+// extract US content rating from ratings array
+export const getContentRating = (ratingsArr) => {
+  return ratingsArr.find((rating) => rating.iso_3166_1 === 'US').rating;
 };

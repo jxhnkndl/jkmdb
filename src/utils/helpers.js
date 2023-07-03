@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const formatSearchTerm = (searchTerm) => {
   return searchTerm
     .split(' ')
@@ -57,7 +59,7 @@ export const formatAirDates = (debutYear, endYear) => {
 };
 
 // format genre string
-export const createGenres = (genreArr) => {
+export const formatGenres = (genreArr) => {
   return genreArr.map(genre => genre.name);
 };
 
@@ -65,3 +67,54 @@ export const createGenres = (genreArr) => {
 export const getContentRating = (ratingsArr) => {
   return ratingsArr.find((rating) => rating.iso_3166_1 === 'US').rating;
 };
+
+export const setContentColor = (rating) => {
+  if (rating === 'TV-G') {
+    return 'text-success';
+  } else if (rating === 'TV-PG') {
+    return 'text-info';
+  } else if (rating === 'TV-14') {
+    return 'text-warning';
+  } else if (rating === 'TV-MA') {
+    return 'text-error';
+  } else {
+    return 'text-base-content';
+  }
+}
+
+// create date string
+export const formatDate = (date) => {
+  return dayjs(date).format('MMMM DD, YYYY');
+}
+
+// create roles string
+export const formatRoles = (roles) => {
+  let result = '';
+
+  roles.forEach((role, index) => {
+    if (index === roles.length - 1) {
+      result += role.character;
+    } else {
+      result += `${role.character}, `;
+    }
+  });
+
+  return result;
+}
+
+// create keywords string
+export const formatKeywords = (keywords) => {
+  let result = '';
+
+  keywords.forEach((keyword, index) => {
+    
+
+    if (index === keywords.length - 1) {
+      result += keyword.name;
+    } else {
+      result += `${keyword.name}, `;
+    }
+  })
+  
+  return result;
+}

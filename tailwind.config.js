@@ -5,6 +5,13 @@ module.exports = {
   theme: {
     container: {
       center: true
+    },
+    extend: {
+      minHeight: {
+        '300': '300px',
+        '350': '350px',
+        '400': '400px'
+      }
     }
   },
   daisyui: {

@@ -80,9 +80,7 @@ function MovieDetails() {
               {/* user rating */}
               <div className="stat text-center md:text-left">
                 <div className="stat-title">User Rating</div>
-                <div className={`stat-value ${setRatingColor(rating, 'text')}`}>
-                  {rating}%
-                </div>
+                <div className={`stat-value ${ratingColor}`}>{rating}%</div>
                 <div className="stat-desc">
                   Based on {data.vote_count} votes
                 </div>
@@ -102,8 +100,10 @@ function MovieDetails() {
           <div className="col-span-4 md:col-span-2 lg:col-span-3">
             {/* genres */}
             <div className="flex flex-wrap text-[10px] sm:text-sm mb-5">
-              {genres.map((genre) => (
-                <span className="font-bold mb-2 mr-3 border p-1">{genre}</span>
+              {genres.map((genre, index) => (
+                <span key={index} className="font-bold mb-2 mr-3 border p-1">
+                  {genre}
+                </span>
               ))}
             </div>
 
@@ -131,10 +131,9 @@ function MovieDetails() {
             </div>
             <div className="flex items-center mb-10">
               {data.networks.map((network, index) => (
-                <div className="mr-4">
+                <div key={network.id} className="mr-4">
                   <img
                     className="max-h-10"
-                    key={network.id}
                     src={`https://image.tmdb.org/t/p/w154/${network.logo_path}`}
                     alt={`Watch ${data.name} on ${network.name}`}
                   />

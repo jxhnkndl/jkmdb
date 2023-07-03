@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { setPercentRating, setRatingBadge } from '../utils/helpers';
+import { setPercentRating, setRatingColor } from '../utils/helpers';
 
 function ResultCard({ display, data }) {
   const { poster_path, name, title, vote_average } = data;
@@ -9,15 +9,13 @@ function ResultCard({ display, data }) {
   const rating = setPercentRating(vote_average);
 
   // determine color of rating badge based on rating percentage
-  const ratingBadge = setRatingBadge(rating);
+  const ratingBadge = setRatingColor(rating, 'badge');
 
   return (
     <div
       className={`card flex flex-col justify-between mr-4 bg-base-200 shadow-xl mb-6 ${
-        // determine sizing based on whether display mode is grid or row
-        display === 'grid'
-          ? `w-auto lg:w-auto`
-          : `shrink-0 w-40 lg:w-48`
+        // determine card sizing based on whether display mode is grid or row
+        display === 'grid' ? `w-auto lg:w-auto` : `shrink-0 w-40 lg:w-48`
       }`}
     >
       <Link to="/">

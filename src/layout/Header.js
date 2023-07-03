@@ -4,8 +4,8 @@ import SearchBar from '../components/SearchBar';
 
 function Header() {
   return (
-    <header className="bg-base-200 shadow-md shadow-base-200 ">
-      <div className="container px-4 md:max-lg:px-0 pb-2">
+    <header className="bg-base-200">
+      <div className="container max-w-7xl px-4 md:px-8 pb-4">
         <Navbar />
         <SearchBar />
       </div>

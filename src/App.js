@@ -14,12 +14,12 @@ function App() {
       <Router>
         <div className="min-h-screen flex flex-col justify-between">
           <Header />
-          <main className="container px-4 md:max-lg:px-0">
+          <main className="container max-w-7xl px-4 md:px-8">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/trending-tv" element={<TrendingTV />} />
               <Route path="/trending-movies" element={<TrendingMovies />} />
-              <Route path="/search/:title" element={<MovieDetails />} />
+              <Route path="/movie-details" element={<MovieDetails />} />
               <Route path="/*" element={<Home />} />
             </Routes>
           </main>

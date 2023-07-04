@@ -9,8 +9,6 @@ function MovieContainer({ display, limit, data }) {
   // limit results
   let results = limitResults(resultsArr, limit);
 
-  console.log(display)
-
   return (
     <section>
       {/* if results should be in row, display this */}

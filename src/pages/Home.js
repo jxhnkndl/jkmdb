@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { BiSolidRightArrow } from 'react-icons/bi';
+import Loader from '../components/Loader';
 import MovieContainer from '../components/MovieContainer';
 import MovieContext from '../context/movie/MovieContext';
 import { formatSearchTerm } from '../utils/helpers';
@@ -20,7 +21,7 @@ function Home() {
     // get trending tv and movie data from tmdb api when home page loads
     const initMovieState = async () => {
       // update api loading state to true
-      dispatch({ type: 'SET_LOADING' });
+      dispatch({ type: 'SET_LOADING_TRUE' });
 
       const tvShows = await fetchTrending(`/trending/tv/day?language=en-US`);
       const movies = await fetchTrending(`/trending/movie/day?language=en-US`);
@@ -33,6 +34,10 @@ function Home() {
           movies,
         },
       });
+
+      // delay setting loading to false briefly to smooth the transition
+      // and ensure all content renders at the same time
+      setTimeout(() => dispatch({ type: 'SET_LOADING_FALSE' }), 500);
     };
 
     initMovieState();
@@ -43,7 +48,7 @@ function Home() {
   return (
     <div>
       {loading ? (
-        <p className="text-3xl">LOADING...</p>
+        <Loader />
       ) : (
         <section>
           {/* only display the first row of trending tv results

@@ -25,7 +25,7 @@ function SearchBar() {
       navigate('/');
     }
 
-    dispatch({ type: 'SET_LOADING' });
+    dispatch({ type: 'SET_LOADING_TRUE' });
 
     const searchResults = await searchByTitle(
       `/search/multi?query=${searchTerm}&include_adult=false&language=en-US&page=1`
@@ -39,6 +39,8 @@ function SearchBar() {
         searchResults,
       },
     });
+
+    dispatch({ type: 'SET_LOADING_FALSE' })
 
     setSearchTerm('');
   };

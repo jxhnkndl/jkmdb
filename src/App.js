@@ -4,7 +4,7 @@ import Header from './layout/Header';
 import Home from './pages/Home';
 import TrendingTV from './pages/TrendingTV';
 import TrendingMovies from './pages/TrendingMovies';
-import MovieDetails from './pages/MovieDetails';
+import Details from './pages/Details';
 import Footer from './layout/Footer';
 import { MovieProvider } from './context/movie/MovieContext';
 
@@ -19,7 +19,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/trending-tv" element={<TrendingTV />} />
               <Route path="/trending-movies" element={<TrendingMovies />} />
-              <Route path="/movie-details" element={<MovieDetails />} />
+              <Route path="/:mediaType/:id" element={<Details />} />
               <Route path="/*" element={<Home />} />
             </Routes>
           </main>

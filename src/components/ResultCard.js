@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { setPercentRating, setRatingColor } from '../utils/helpers';
 
 function ResultCard({ display, data }) {
-  const { poster_path, name, title, vote_average } = data;
+  const { id, media_type, poster_path, name, title, vote_average } = data;
 
   // convert rating into percentage
   const rating = setPercentRating(vote_average);
@@ -18,7 +18,7 @@ function ResultCard({ display, data }) {
         display === 'grid' ? `w-auto lg:w-auto` : `shrink-0 w-40 lg:w-48`
       }`}
     >
-      <Link to="/">
+      <Link to={`/${media_type}/${id}`}>
         <figure>
           <img
             src={`https://image.tmdb.org/t/p/w342/${poster_path}`}

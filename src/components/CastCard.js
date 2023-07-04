@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { formatRoles } from '../utils/helpers';
 
 function CastCard({ data }) {
-  const { profile_path, name, roles } = data;
+  const { profile_path, name, roles, character } = data;
 
   return (
     <div
@@ -20,7 +20,7 @@ function CastCard({ data }) {
       <div className="pb-4">
         <div className="card-body py-2 px-4">
           <h2 className="text-1xl font-semibold truncate">{name}</h2>
-          <p className="text-1xl truncate">{formatRoles(roles)}</p>
+          <p className="text-1xl truncate">{formatRoles(roles || character)}</p>
         </div>
       </div>
     </div>

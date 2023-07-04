@@ -10,8 +10,6 @@ function SearchBar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  console.log(pathname)
-
   // handle input change
   const handleChange = (event) => {
     setSearchTerm(event.target.value);

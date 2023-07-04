@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { BiSolidRightArrow } from 'react-icons/bi';
 import MovieContainer from '../components/MovieContainer';
@@ -6,8 +6,6 @@ import MovieContext from '../context/movie/MovieContext';
 import { formatSearchTerm } from '../utils/helpers';
 
 function Home() {
-  const [display, setDisplay] = useState('trending');
-
   const {
     tvShows,
     movies,
@@ -19,29 +17,25 @@ function Home() {
   } = useContext(MovieContext);
 
   useEffect(() => {
-    if (display === 'trending') {
-      // get trending tv and movie data from tmdb api when home page loads
-      const initMovieState = async () => {
-        // update api loading state to true
-        dispatch({ type: 'SET_LOADING' });
+    // get trending tv and movie data from tmdb api when home page loads
+    const initMovieState = async () => {
+      // update api loading state to true
+      dispatch({ type: 'SET_LOADING' });
 
-        const tvShows = await fetchTrending(`/trending/tv/day?language=en-US`);
-        const movies = await fetchTrending(
-          `/trending/movie/day?language=en-US`
-        );
+      const tvShows = await fetchTrending(`/trending/tv/day?language=en-US`);
+      const movies = await fetchTrending(`/trending/movie/day?language=en-US`);
 
-        // update state with response data from both api calls
-        dispatch({
-          type: 'GET_TRENDING',
-          payload: {
-            tvShows,
-            movies,
-          },
-        });
-      };
+      // update state with response data from both api calls
+      dispatch({
+        type: 'GET_TRENDING',
+        payload: {
+          tvShows,
+          movies,
+        },
+      });
+    };
 
-      initMovieState();
-    }
+    initMovieState();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

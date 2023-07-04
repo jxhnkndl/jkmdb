@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import ShowDetails from '../components/ShowDetails';
+import MovieDetails from '../components/MovieDetails';
 
 function Details() {
   const { mediaType } = useParams();
@@ -8,6 +9,8 @@ function Details() {
   const renderDetails = () => {
     if (mediaType === 'tv') {
       return <ShowDetails />;
+    } else {
+      return <MovieDetails />;
     }
   };
 

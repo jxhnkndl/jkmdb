@@ -47,7 +47,7 @@ export const MovieProvider = ({ children }) => {
   const searchByTitle = async (endpoint) => {
     const response = await tmdb.get(endpoint);
 
-    return response.data.results;
+    return response.data.results || response.data;
   }
 
   return (

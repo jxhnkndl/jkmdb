@@ -5,7 +5,6 @@ const movieReducer = (state, action) => {
         ...state,
         tvShows: action.payload.tvShows,
         movies: action.payload.movies,
-        loading: false,
       };
 
     case 'SEARCH_TITLES':
@@ -13,7 +12,6 @@ const movieReducer = (state, action) => {
         ...state,
         searchTerm: action.payload.searchTerm,
         searchResults: action.payload.searchResults,
-        loading: false,
       };
 
     case 'CLEAR_SEARCH':
@@ -21,28 +19,31 @@ const movieReducer = (state, action) => {
         ...state,
         searchTerm: '',
         searchResults: [],
-        loading: false,
       };
 
-    case 'SET_DETAILS':
+    case 'SET_SHOW_DETAILS':
       return {
         ...state,
-        details: action.payload,
-        loading: false,
+        showDetails: action.payload,
       };
 
-    case 'CLEAR_DETAILS':
+    case 'SET_MOVIE_DETAILS':
       return {
         ...state,
-        details: {},
-        loading: true,
+        movieDetails: action.payload,
       };
 
-    case 'SET_LOADING':
+    case 'SET_LOADING_TRUE':
       return {
         ...state,
         loading: true,
       };
+    
+    case 'SET_LOADING_FALSE':
+      return {
+        ...state,
+        loading: false
+      }
 
     default:
       return state;

@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { BiSolidRightArrow } from 'react-icons/bi';
+import Loader from './Loader';
 import CastCard from '../components/CastCard';
 import ResultCard from '../components/ResultCard';
 import MovieContext from '../context/movie/MovieContext';
@@ -16,7 +17,7 @@ import {
 } from '../utils/helpers';
 
 function ShowDetails() {
-  const { details, loading, dispatch, searchByTitle } =
+  const { showDetails, loading, dispatch, searchByTitle } =
     useContext(MovieContext);
 
   const { mediaType, id } = useParams();
@@ -24,7 +25,7 @@ function ShowDetails() {
 
   useEffect(() => {
     const fetchDetails = async () => {
-      dispatch({ type: 'CLEAR_DETAILS' });
+      dispatch({ type: 'SET_LOADING_TRUE' });
 
       const response = await searchByTitle(
         `/tv/${id}?append_to_response=aggregate_credits,recommendations,content_ratings,keywords&language=en-US`
@@ -41,9 +42,13 @@ function ShowDetails() {
       };
 
       dispatch({
-        type: 'SET_DETAILS',
+        type: 'SET_SHOW_DETAILS',
         payload: { ...response, ...formattedDetails },
       });
+
+      // delay setting loading to false briefly to smooth the transition
+      // and ensure all content renders at the same time
+      setTimeout(() => dispatch({ type: 'SET_LOADING_FALSE' }), 750);
     };
 
     fetchDetails();
@@ -51,15 +56,15 @@ function ShowDetails() {
 
   return (
     <section className="my-8">
-      {loading || !details ? (
-        <p className="text-3xl">LOADING...</p>
+      {loading || !showDetails ? (
+        <Loader />
       ) : (
-        <div className="">
+        <div>
           {/* heading */}
           <div className="">
             <div className="flex justify-between items-center">
               <h1 className="text-2xl md:text-5xl font-bold mb-3">
-                {details.name}
+                {showDetails.name}
               </h1>
               <Link to="/">
                 <button className="btn btn-circle btn-outline btn-xs md:btn-sm mb-4 mr-">
@@ -82,9 +87,9 @@ function ShowDetails() {
             </div>
             <p className="text-xs md:text-sm">
               <span className="font-bold mr-3 border p-1">
-                {details.contentRating}
+                {showDetails.contentRating}
               </span>
-              TV Series ({details.airDates})
+              TV Series ({showDetails.airDates})
             </p>
           </div>
 
@@ -92,7 +97,7 @@ function ShowDetails() {
           <div
             className="grid grid-cols-3 w-auto min-h-200 md:min-h-350 lg:min-h-400 bg-center lg:bg-top my-6"
             style={{
-              backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${details.backdrop_path})`,
+              backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${showDetails.backdrop_path})`,
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover',
             }}
@@ -102,69 +107,78 @@ function ShowDetails() {
               <figure>
                 <img
                   className=" w-80 "
-                  src={`https://image.tmdb.org/t/p/w342/${details.poster_path}`}
-                  alt={`${details.name} poster`}
+                  src={`https://image.tmdb.org/t/p/w342/${showDetails.poster_path}`}
+                  alt={`${showDetails.name} poster`}
                 />
               </figure>
             </div>
           </div>
 
-          {/* basic details */}
+          {/* main content */}
           <div className="grid grid-cols-3 lg:grid-cols-4 gap-8">
-            {/* stats / details */}
+            {/* stats */}
             <aside className="col-span-4 md:col-span-1">
-              {/* stats */}
               <div className="stats stats-vertical min-w-full bg-base-200 shadow-lg">
                 {/* content rating */}
                 <div className="stat text-center md:text-left">
                   <div className="stat-title">Rating</div>
                   <div
-                    className={`stat-value ${setTextColor(details.contentRating)}`}
+                    className={`stat-value ${setTextColor(
+                      showDetails.contentRating
+                    )}`}
                   >
-                    {details.contentRating}
+                    {showDetails.contentRating}
                   </div>
                   <div className="stat-desc">For mature audiences</div>
                 </div>
+
                 {/* user rating */}
                 <div className="stat text-center md:text-left">
                   <div className="stat-title">User Rating</div>
                   <div
                     className={`stat-value ${setBadgeColor(
-                      details.percentRating,
+                      showDetails.percentRating,
                       'text'
                     )}`}
                   >
-                    {details.percentRating}%
+                    {showDetails.percentRating}%
                   </div>
                   <div className="stat-desc">
-                    Based on {details.vote_count} votes
+                    Based on {showDetails.vote_count} votes
                   </div>
                 </div>
+
                 {/* seasons */}
                 <div className="stat text-center md:text-left">
                   <div className="stat-title">Seasons</div>
-                  <div className="stat-value">{details.number_of_seasons}</div>
+                  <div className="stat-value">
+                    {showDetails.number_of_seasons}
+                  </div>
                   <div className="stat-desc">
-                    {details.number_of_episodes} total episodes
+                    {showDetails.number_of_episodes} total episodes
                   </div>
                 </div>
               </div>
             </aside>
 
-            {/* main */}
+            {/* main content */}
             <div className="col-span-4 md:col-span-2 lg:col-span-3">
               {/* genres */}
               <div className="flex flex-wrap text-[10px] sm:text-sm mb-5">
-                {details.genreArr.map((genre, index) => (
-                  <span key={index} className="font-bold mb-2 mr-3 border p-1">
-                    {genre}
-                  </span>
-                ))}
+                {showDetails.genreArr &&
+                  showDetails.genreArr.map((genre, index) => (
+                    <span
+                      key={index}
+                      className="font-bold mb-2 mr-3 border p-1"
+                    >
+                      {genre}
+                    </span>
+                  ))}
               </div>
 
               {/* tagline */}
               <p className="text-3xl italic text-accent mb-5">
-                {details.tagline}
+                {showDetails.tagline}
               </p>
 
               {/* overview */}
@@ -172,7 +186,7 @@ function ShowDetails() {
                 <p className="text-2xl font-semibold mr-2">Overview</p>
                 <BiSolidRightArrow />
               </div>
-              <p className="mb-10">{details.overview}</p>
+              <p className="mb-10">{showDetails.overview}</p>
 
               {/* latest episode */}
               <div className="flex items-center mb-3">
@@ -181,7 +195,7 @@ function ShowDetails() {
                 </p>
                 <BiSolidRightArrow />
               </div>
-              <p className="mb-10">{formatDate(details.last_air_date)}</p>
+              <p className="mb-10">{formatDate(showDetails.last_air_date)}</p>
 
               {/* networks */}
               <div className="flex items-center mb-3">
@@ -189,15 +203,16 @@ function ShowDetails() {
                 <BiSolidRightArrow />
               </div>
               <div className="flex items-center mb-10">
-                {details.networks.map((network, index) => (
-                  <div key={network.id} className="mr-4">
-                    <img
-                      className="max-h-10"
-                      src={`https://image.tmdb.org/t/p/w154/${network.logo_path}`}
-                      alt={`Watch ${details.name} on ${network.name}`}
-                    />
-                  </div>
-                ))}
+                {showDetails.networks &&
+                  showDetails.networks.map((network, index) => (
+                    <div key={network.id} className="mr-4">
+                      <img
+                        className="max-h-10"
+                        src={`https://image.tmdb.org/t/p/w154/${network.logo_path}`}
+                        alt={`Watch ${showDetails.name} on ${network.name}`}
+                      />
+                    </div>
+                  ))}
               </div>
 
               {/* cast */}
@@ -207,13 +222,14 @@ function ShowDetails() {
               </div>
               <div className="flex overflow-x-auto whitespace-nowrap mb-6">
                 {/* render cast cards only for actors with profile photos */}
-                {details.aggregate_credits.cast.map((actor, index) => {
-                  if (actor.profile_path) {
-                    return (
-                      <CastCard key={`${index}-${actor.id}`} data={actor} />
-                    );
-                  }
-                })}
+                {showDetails.aggregate_credits &&
+                  showDetails.aggregate_credits.cast.map((actor, index) => {
+                    if (actor.profile_path) {
+                      return (
+                        <CastCard key={`${index}-${actor.id}`} data={actor} />
+                      );
+                    }
+                  })}
               </div>
 
               {/* recommendations */}
@@ -223,17 +239,18 @@ function ShowDetails() {
               </div>
               <div className="flex overflow-x-auto whitespace-nowrap mb-10">
                 {/* render cast cards only for actors with profile photos */}
-                {details.recommendations.results.map((result, index) => {
-                  if (result.poster_path) {
-                    return (
-                      <ResultCard
-                        key={`${index}-${result.id}`}
-                        data={result}
-                        display={'row'}
-                      />
-                    );
-                  }
-                })}
+                {showDetails.recommendations &&
+                  showDetails.recommendations.results.map((result, index) => {
+                    if (result.poster_path) {
+                      return (
+                        <ResultCard
+                          key={`${index}-${result.id}`}
+                          data={result}
+                          display={'row'}
+                        />
+                      );
+                    }
+                  })}
               </div>
             </div>
           </div>

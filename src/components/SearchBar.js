@@ -1,10 +1,16 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import MovieContext from '../context/movie/MovieContext';
 
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
 
   const { dispatch, searchByTitle } = useContext(MovieContext);
+
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  console.log(pathname)
 
   // handle input change
   const handleChange = (event) => {
@@ -14,6 +20,12 @@ function SearchBar() {
   // handle search submit
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // redirect to home page to display search results if user
+    // is currently looking at show/movie details
+    if (pathname !== '/') {
+      navigate('/');
+    }
 
     dispatch({ type: 'SET_LOADING' });
 

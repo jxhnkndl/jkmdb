@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { setPercentRating, setRatingColor } from '../utils/helpers';
+import { setPercentRating, setBadgeColor } from '../utils/helpers';
 
 function ResultCard({ display, data }) {
   const { id, media_type, poster_path, name, title, vote_average } = data;
@@ -9,7 +9,7 @@ function ResultCard({ display, data }) {
   const rating = setPercentRating(vote_average);
 
   // determine color of rating badge based on rating percentage
-  const ratingBadge = setRatingColor(rating, 'badge');
+  const ratingBadge = setBadgeColor(rating, 'badge');
 
   return (
     <div

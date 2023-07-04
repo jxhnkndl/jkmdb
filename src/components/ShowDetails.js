@@ -10,12 +10,10 @@ import {
   formatGenres,
   getContentRating,
   setPercentRating,
-  setRatingColor,
-  setContentColor,
+  setBadgeColor,
+  setTextColor,
   formatDate,
 } from '../utils/helpers';
-
-import data from '../responseData.json';
 
 function ShowDetails() {
   const { details, loading, dispatch, searchByTitle } =
@@ -121,9 +119,7 @@ function ShowDetails() {
                 <div className="stat text-center md:text-left">
                   <div className="stat-title">Rating</div>
                   <div
-                    className={`stat-value ${setContentColor(
-                      details.contentRating
-                    )}`}
+                    className={`stat-value ${setTextColor(details.contentRating)}`}
                   >
                     {details.contentRating}
                   </div>
@@ -133,7 +129,7 @@ function ShowDetails() {
                 <div className="stat text-center md:text-left">
                   <div className="stat-title">User Rating</div>
                   <div
-                    className={`stat-value ${setRatingColor(
+                    className={`stat-value ${setBadgeColor(
                       details.percentRating,
                       'text'
                     )}`}

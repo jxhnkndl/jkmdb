@@ -38,8 +38,6 @@ function Home() {
             movies,
           },
         });
-
-        console.log(tvShows)
       };
 
       initMovieState();
@@ -47,12 +45,6 @@ function Home() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // clear search data and reset page to default trending data
-  const handleClear = () => {
-    dispatch({ type: 'CLEAR_SEARCH' });
-    setDisplay('trending');
-  };
 
   return (
     <div>
@@ -65,7 +57,7 @@ function Home() {
               and there are no search results to show */}
           {tvShows.length > 0 && searchResults.length === 0 && (
             <div className="my-10">
-              <Link to="/trending-tv" className='hover:text-primary'>
+              <Link to="/trending-tv" className="hover:text-primary">
                 <p className="text-4xl mb-4 mr-3 inline">Trending TV</p>
                 <BiSolidRightArrow className="text-3xl mb-4 inline" />
               </Link>
@@ -78,7 +70,7 @@ function Home() {
               are no search results to show */}
           {movies.length > 0 && searchResults.length === 0 && (
             <div className="my-10">
-              <Link to="/trending-movies" className='hover:text-primary'>
+              <Link to="/trending-movies" className="hover:text-primary">
                 <p className="text-4xl mb-4 mr-3 inline">Trending Movies</p>
                 <BiSolidRightArrow className="text-3xl mb-4 inline" />
               </Link>
@@ -92,13 +84,10 @@ function Home() {
             <div className="my-10">
               <div className="flex justify-between items-center">
                 <p className="text-4xl mb-4">{formatSearchTerm(searchTerm)}</p>
-                <button
-                  className="btn btn-circle btn-outline btn-sm mb-4 mr-4 md:max-lg:mr-16"
-                  onClick={handleClear}
-                >
+                <button className="btn btn-circle btn-outline btn-xs md:btn-sm mb-4 mr-">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
+                    className="h-4 w-4 md:h-6 md:w-6"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"

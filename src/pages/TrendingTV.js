@@ -15,10 +15,10 @@ function TrendingTV() {
           <div className="flex justify-between items-center">
             <p className="text-4xl mb-4">Trending TV</p>
             <Link to="/">
-              <button className="btn btn-circle btn-outline btn-sm mb-4 mr-4">
+              <button className="btn btn-circle btn-outline btn-xs md:btn-sm mb-4 mr-">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
+                  className="h-4 w-4 md:h-6 md:w-6"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -33,7 +33,9 @@ function TrendingTV() {
               </button>
             </Link>
           </div>
-          {tvShows.length > 0 && <MovieContainer display={'grid'} data={tvShows} />}
+          {tvShows.length > 0 && (
+            <MovieContainer display={'grid'} data={tvShows} />
+          )}
         </section>
       )}
     </div>

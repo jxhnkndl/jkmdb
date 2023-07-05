@@ -37,7 +37,7 @@ function Home() {
 
       // delay setting loading to false briefly to smooth the transition
       // and ensure all content renders at the same time
-      setTimeout(() => dispatch({ type: 'SET_LOADING_FALSE' }), 500);
+      setTimeout(() => dispatch({ type: 'SET_LOADING_FALSE' }));
     };
 
     initMovieState();

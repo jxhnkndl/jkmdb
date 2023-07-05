@@ -227,7 +227,7 @@ function ShowDetails() {
                       />
                     </div>
                   ))}
-                {!showDetails.network && <p>Networks Unavailable</p>}
+                {!showDetails.networks && <p>Networks Unavailable</p>}
               </div>
 
               {/* cast */}

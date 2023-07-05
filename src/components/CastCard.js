@@ -9,7 +9,11 @@ function CastCard({ data }) {
     <div
       className={`card flex flex-col justify-between mr-4 bg-base-200 shadow-xl mb-6 shrink-0 w-40 lg:w-48`}
     >
-      <Link to="/">
+      <Link
+        to={`https://en.wikipedia.org/wiki/${name}`}
+        target="_blank"
+        rel="noreferrer"
+      >
         <figure>
           <img
             src={`https://image.tmdb.org/t/p/w342/${profile_path}`}

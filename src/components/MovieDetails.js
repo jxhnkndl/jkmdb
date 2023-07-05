@@ -16,7 +16,7 @@ import {
 } from '../utils/helpers';
 
 function MovieDetails() {
-  const { movieDetails, loading, dispatch, searchByTitle } =
+  const { movieDetails, focusId, loading, dispatch, searchByTitle } =
     useContext(MovieContext);
 
   const { mediaType, id } = useParams();
@@ -48,7 +48,9 @@ function MovieDetails() {
     };
 
     fetchDetails();
-  }, []);
+
+    // update component details when title selection changes
+  }, [focusId]);
 
   return (
     <section className="my-8">

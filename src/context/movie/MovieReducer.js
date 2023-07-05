@@ -33,6 +33,12 @@ const movieReducer = (state, action) => {
         movieDetails: action.payload,
       };
 
+    case 'SET_FOCUS_ID':
+      return {
+        ...state,
+        focusId: action.payload,
+      }
+
     case 'SET_LOADING_TRUE':
       return {
         ...state,

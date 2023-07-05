@@ -70,7 +70,11 @@ export const setBadgeColor = (rating, type) => {
 
 // extract US content rating from ratings array
 export const getContentRating = (ratingsArr) => {
-  return ratingsArr.find((rating) => rating.iso_3166_1 === 'US').rating;
+  if (ratingsArr.length > 0) {
+    return  ratingsArr.find((rating) => rating.iso_3166_1 === 'US').rating;
+  }
+
+  return 'Unknown'
 };
 
 export const getMpaaRating = (ratingsArr) => {

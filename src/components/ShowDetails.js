@@ -37,7 +37,9 @@ function ShowDetails() {
           response.last_air_date
         ),
         genreArr: formatGenres(response.genres),
-        contentRating: getContentRating(response.content_ratings.results),
+        contentRating: getContentRating(
+          response.content_ratings.results || 'Unknown'
+        ),
         percentRating: setPercentRating(response.vote_average),
       };
 
@@ -87,12 +89,14 @@ function ShowDetails() {
                 </button>
               </Link>
             </div>
-            <p className="text-xs md:text-sm">
-              <span className="font-bold mr-3 border p-1">
-                {showDetails.contentRating}
-              </span>
-              TV Series ({showDetails.airDates})
-            </p>
+            {showDetails.contentRating && (
+              <p className="text-xs md:text-sm">
+                <span className="font-bold mr-3 border p-1">
+                  {showDetails.contentRating}
+                </span>
+                TV Series ({showDetails.airDates})
+              </p>
+            )}
           </div>
 
           {/* hero backdrop */}
@@ -122,17 +126,19 @@ function ShowDetails() {
             <aside className="col-span-4 md:col-span-1">
               <div className="stats stats-vertical min-w-full bg-base-200 shadow-lg">
                 {/* content rating */}
-                <div className="stat text-center md:text-left">
-                  <div className="stat-title">Rating</div>
-                  <div
-                    className={`stat-value ${setTextColor(
-                      showDetails.contentRating
-                    )}`}
-                  >
-                    {showDetails.contentRating}
+                {showDetails.contentRating && (
+                  <div className="stat text-center md:text-left">
+                    <div className="stat-title">Rating</div>
+                    <div
+                      className={`stat-value ${setTextColor(
+                        showDetails.contentRating
+                      )}`}
+                    >
+                      {showDetails.contentRating}
+                    </div>
+                    <div className="stat-desc">For mature audiences</div>
                   </div>
-                  <div className="stat-desc">For mature audiences</div>
-                </div>
+                )}
 
                 {/* user rating */}
                 <div className="stat text-center md:text-left">
@@ -151,37 +157,43 @@ function ShowDetails() {
                 </div>
 
                 {/* seasons */}
-                <div className="stat text-center md:text-left">
-                  <div className="stat-title">Seasons</div>
-                  <div className="stat-value">
-                    {showDetails.number_of_seasons}
+                {showDetails.number_of_seasons && (
+                  <div className="stat text-center md:text-left">
+                    <div className="stat-title">Seasons</div>
+                    <div className="stat-value">
+                      {showDetails.number_of_seasons}
+                    </div>
+                    <div className="stat-desc">
+                      {showDetails.number_of_episodes} total episodes
+                    </div>
                   </div>
-                  <div className="stat-desc">
-                    {showDetails.number_of_episodes} total episodes
-                  </div>
-                </div>
+                )}
               </div>
             </aside>
 
             {/* main content */}
             <div className="col-span-4 md:col-span-2 lg:col-span-3">
               {/* genres */}
-              <div className="flex flex-wrap text-[10px] sm:text-sm mb-5">
-                {showDetails.genreArr &&
-                  showDetails.genreArr.map((genre, index) => (
-                    <span
-                      key={index}
-                      className="font-bold mb-2 mr-3 border p-1"
-                    >
-                      {genre}
-                    </span>
-                  ))}
-              </div>
+              {showDetails.genreArr && (
+                <div className="flex flex-wrap text-[10px] sm:text-sm mb-5">
+                  {showDetails.genreArr &&
+                    showDetails.genreArr.map((genre, index) => (
+                      <span
+                        key={index}
+                        className="font-bold mb-2 mr-3 border p-1"
+                      >
+                        {genre}
+                      </span>
+                    ))}
+                </div>
+              )}
 
               {/* tagline */}
-              <p className="text-3xl italic text-accent mb-5">
-                {showDetails.tagline}
-              </p>
+              {showDetails.tagline && (
+                <p className="text-3xl italic text-accent mb-5">
+                  {showDetails.tagline}
+                </p>
+              )}
 
               {/* overview */}
               <div className="flex items-center mb-3">
@@ -215,6 +227,7 @@ function ShowDetails() {
                       />
                     </div>
                   ))}
+                {!showDetails.network && <p>Networks Unavailable</p>}
               </div>
 
               {/* cast */}
@@ -224,7 +237,7 @@ function ShowDetails() {
               </div>
               <div className="flex overflow-x-auto whitespace-nowrap mb-6">
                 {/* render cast cards only for actors with profile photos */}
-                {showDetails.aggregate_credits &&
+                {showDetails.aggregate_credits.cast.length > 0 &&
                   showDetails.aggregate_credits.cast.map((actor, index) => {
                     if (actor.profile_path) {
                       return (
@@ -232,6 +245,9 @@ function ShowDetails() {
                       );
                     }
                   })}
+                {!showDetails.aggregate_credits.cast.length > 0 && (
+                  <p className="mb-10">Cast Details Unavailable</p>
+                )}
               </div>
 
               {/* recommendations */}
@@ -253,6 +269,9 @@ function ShowDetails() {
                       );
                     }
                   })}
+                {!showDetails.recommendations && (
+                  <p>Recommendations Unavailable</p>
+                )}
               </div>
             </div>
           </div>

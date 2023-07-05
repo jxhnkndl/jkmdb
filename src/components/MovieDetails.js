@@ -146,32 +146,40 @@ function MovieDetails() {
                 </div>
 
                 {/* runtime */}
-                <div className="stat text-center md:text-left">
-                  <div className="stat-title">Runtime</div>
-                  <div className="stat-value">{movieDetails.runtime} mins</div>
-                </div>
+                {movieDetails.runtime && (
+                  <div className="stat text-center md:text-left">
+                    <div className="stat-title">Runtime</div>
+                    <div className="stat-value">
+                      {movieDetails.runtime} mins
+                    </div>
+                  </div>
+                )}
               </div>
             </aside>
 
             {/* details */}
             <div className="col-span-4 md:col-span-2 lg:col-span-3">
               {/* genres */}
-              <div className="flex flex-wrap text-[10px] sm:text-sm mb-5">
-                {movieDetails.genreArr &&
-                  movieDetails.genreArr.map((genre, index) => (
-                    <span
-                      key={index}
-                      className="font-bold mb-2 mr-3 border p-1"
-                    >
-                      {genre}
-                    </span>
-                  ))}
-              </div>
+              {movieDetails.genreArr && (
+                <div className="flex flex-wrap text-[10px] sm:text-sm mb-5">
+                  {movieDetails.genreArr &&
+                    movieDetails.genreArr.map((genre, index) => (
+                      <span
+                        key={index}
+                        className="font-bold mb-2 mr-3 border p-1"
+                      >
+                        {genre}
+                      </span>
+                    ))}
+                </div>
+              )}
 
               {/* tagline */}
-              <p className="text-3xl italic text-accent mb-5">
-                {movieDetails.tagline}
-              </p>
+              {movieDetails.tagline && (
+                <p className="text-3xl italic text-accent mb-5">
+                  {movieDetails.tagline}
+                </p>
+              )}
 
               {/* overview */}
               <div className="flex items-center mb-3">
@@ -185,45 +193,57 @@ function MovieDetails() {
                 <p className="text-2xl font-semibold mr-2">Release Date (US)</p>
                 <BiSolidRightArrow />
               </div>
-              <p className="mb-10">{formatDate(movieDetails.last_air_date)}</p>
+              <p className="mb-10">{formatDate(movieDetails.release_date)}</p>
 
               {/* cast */}
               <div className="flex items-center mb-3">
                 <p className="text-2xl font-semibold mr-2">Series Cast</p>
                 <BiSolidRightArrow />
               </div>
-              <div className="flex overflow-x-auto whitespace-nowrap mb-6">
-                {/* render cast cards only for actors with profile photos */}
-                {movieDetails.credits &&
-                  movieDetails.credits.cast.map((actor, index) => {
-                    if (actor.profile_path) {
-                      return (
-                        <CastCard key={`${index}-${actor.id}`} data={actor} />
-                      );
-                    }
-                  })}
-              </div>
+              {movieDetails.credits && (
+                <div className="flex overflow-x-auto whitespace-nowrap mb-6">
+                  {/* render cast cards only for actors with profile photos */}
+                  {movieDetails.credits &&
+                    movieDetails.credits.cast.map((actor, index) => {
+                      if (actor.profile_path) {
+                        return (
+                          <CastCard key={`${index}-${actor.id}`} data={actor} />
+                        );
+                      }
+                    })}
+                  {!movieDetails.credits.cast.length > 0 && (
+                    <p>Recommendations Unavailable</p>
+                  )}
+                </div>
+              )}
 
               {/* recommendations */}
               <div className="flex items-center mb-3">
                 <p className="text-2xl font-semibold mr-2">More Like This</p>
                 <BiSolidRightArrow />
               </div>
-              <div className="flex overflow-x-auto whitespace-nowrap mb-10">
-                {/* render cast cards only for actors with profile photos */}
-                {movieDetails.recommendations &&
-                  movieDetails.recommendations.results.map((result, index) => {
-                    if (result.poster_path) {
-                      return (
-                        <ResultCard
-                          key={`${index}-${result.id}`}
-                          data={result}
-                          display={'row'}
-                        />
-                      );
-                    }
-                  })}
-              </div>
+              {movieDetails.recommendations && (
+                <div className="flex overflow-x-auto whitespace-nowrap mb-10">
+                  {/* render cast cards only for actors with profile photos */}
+                  {movieDetails.recommendations &&
+                    movieDetails.recommendations.results.map(
+                      (result, index) => {
+                        if (result.poster_path) {
+                          return (
+                            <ResultCard
+                              key={`${index}-${result.id}`}
+                              data={result}
+                              display={'row'}
+                            />
+                          );
+                        }
+                      }
+                    )}
+                  {!movieDetails.recommendations && (
+                    <p>Recommendations Unavailable</p>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

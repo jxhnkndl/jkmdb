@@ -237,7 +237,7 @@ function ShowDetails() {
               </div>
               <div className="flex overflow-x-auto whitespace-nowrap mb-6">
                 {/* render cast cards only for actors with profile photos */}
-                {showDetails.aggregate_credits.cast.length > 0 &&
+                {showDetails.aggregate_credits &&
                   showDetails.aggregate_credits.cast.map((actor, index) => {
                     if (actor.profile_path) {
                       return (
@@ -245,7 +245,7 @@ function ShowDetails() {
                       );
                     }
                   })}
-                {!showDetails.aggregate_credits.cast.length > 0 && (
+                {!showDetails.aggregate_credits && (
                   <p className="mb-10">Cast Details Unavailable</p>
                 )}
               </div>

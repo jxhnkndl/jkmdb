@@ -211,7 +211,7 @@ function MovieDetails() {
                         );
                       }
                     })}
-                  {!movieDetails.credits.cast.length > 0 && (
+                  {!movieDetails.credits && (
                     <p>Recommendations Unavailable</p>
                   )}
                 </div>

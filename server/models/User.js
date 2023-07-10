@@ -1,4 +1,5 @@
 const { Schema, Model, default: mongoose } = require('mongoose');
+const savedTitle = require('./SavedTitle');
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema(
@@ -18,7 +19,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    watchlists: [],
+    watchlist: [savedTitle],
     friends: [],
   },
   {
@@ -42,6 +43,16 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
+
+// return number of saved titles
+userSchema.virtual('totalSaved').get(function () {
+  return this.watchlists.length;
+});
+
+// return number of friends
+userSchema.virtual('totalFriends').get(function () {
+  return this.friends.length;
+});
 
 // create User model
 const User = mongoose.model('User', userSchema);

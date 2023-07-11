@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const db = require('./config/connection');
+const routes = require('./routes');
 
 // init express
 const app = express();
@@ -14,6 +15,9 @@ app.use(express.json());
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
+
+// install routes
+app.use(routes);
 
 // connect to db and start server
 db.once('open', () => {

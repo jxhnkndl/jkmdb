@@ -40,7 +40,7 @@ userSchema.pre('save', async function (next) {
 });
 
 // validate password on user login
-userSchema.methods.isCorrectPassword = async function (password) {
+userSchema.methods.checkPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 

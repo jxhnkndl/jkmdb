@@ -1,5 +1,5 @@
 const { Schema, Model, default: mongoose } = require('mongoose');
-const savedTitle = require('./SavedTitle');
+const Movie = require('./Movie');
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema(
@@ -19,7 +19,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    watchlist: [savedTitle],
+    watchlist: [Movie],
     friends: [],
   },
   {
@@ -46,7 +46,7 @@ userSchema.methods.isCorrectPassword = async function (password) {
 
 // return number of saved titles
 userSchema.virtual('totalSaved').get(function () {
-  return this.watchlists.length;
+  return this.watchlist.length;
 });
 
 // return number of friends

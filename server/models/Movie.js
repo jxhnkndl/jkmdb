@@ -1,6 +1,6 @@
-const { Schema, Model, default: mongoose } = require('mongoose');
+const { Schema } = require('mongoose');
 
-const savedTitle = new Schema(
+const Movie = new Schema(
   {
     title: {
       type: String,
@@ -22,4 +22,4 @@ const savedTitle = new Schema(
   }
 );
 
-module.exports = savedTitle;
+module.exports = Movie;

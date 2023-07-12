@@ -6,19 +6,22 @@ const {
   searchUsers,
   createUser,
   login,
+  addFriend,
   saveMovie,
-  deleteMovie
+  deleteMovie,
 } = require('../../controllers/user-controller');
+
+router.route('/me').get(authMiddleware, getMe);
 
 router
   .route('/')
   .get(authMiddleware, searchUsers)
   .post(createUser)
-  .put(authMiddleware, saveMovie)
-  
-router.route('/:movieId').delete(authMiddleware, deleteMovie);
+  .put(authMiddleware, saveMovie);
 
-router.route('/me').get(authMiddleware, getMe);
+router.route('/friends/:friendId').put(authMiddleware, addFriend);
+
+router.route('/:movieId').delete(authMiddleware, deleteMovie);
 
 router.route('/login').post(login);
 

@@ -12,6 +12,18 @@ module.exports = {
     res.status(200).json({ msg: 'Success', data: user });
   },
 
+  async getSingleUser(req, res) {
+    const user = await User.findOne({
+      $or: [{ username: req.body.username }, { email: req.body.email }],
+    });
+
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    res.status(200).json({ msg: 'Success', data: user });
+  },
+
   async searchUsers(req, res) {
     // allow for searching useres by username or email address
     const user = await User.findOne({
@@ -63,7 +75,25 @@ module.exports = {
     res.status(200).json({ token, user });
   },
 
-  // add friend
+  async addFriend(req, res) {
+    // (logged in user identified from req.user properties)
+    try {
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: req.user._id },
+        { $addToSet: { friends: req.params.friendId } },
+        { new: true, runValidators: true }
+      );
+
+      if (!updatedUser) {
+        return res.status(404).json({ msg: 'User not found' });
+      }
+
+      return res.status(200).json({ msg: 'Friend added', data: updatedUser });
+    } catch (err) {
+      console.log(err);
+      res.status(400).json({ msg: err });
+    }
+  },
 
   async saveMovie(req, res) {
     // find user from id valid token added to req object
@@ -78,17 +108,17 @@ module.exports = {
         return res.status(404).json({ msg: 'User not found' });
       }
 
-      return res.status(200).json({ msg: 'Save successful', data: updatedUser });
+      return res
+        .status(200)
+        .json({ msg: 'Save successful', data: updatedUser });
     } catch (err) {
       console.log(err);
       return res.status(400).json({ msg: err });
     }
   },
 
-  // delete movie
   async deleteMovie(req, res) {
-    // find user from id valid token added to req object
-
+    // (logged in user identified from req.user properties)
     const updatedUser = await User.findOneAndUpdate(
       { _id: req.user._id },
       { $pull: { watchlist: { apiId: req.params.movieId } } },
@@ -99,6 +129,8 @@ module.exports = {
       return res.status(404).json({ msg: 'User not found' });
     }
 
-    return res.status(200).json({ msg: 'Delete successful', data: updatedUser });
+    return res
+      .status(200)
+      .json({ msg: 'Delete successful', data: updatedUser });
   },
 };

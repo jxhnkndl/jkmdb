@@ -91,7 +91,7 @@ module.exports = {
 
     const updatedUser = await User.findOneAndUpdate(
       { _id: req.user._id },
-      { $pull: { watchlist: { apiId: req.body.apiId } } },
+      { $pull: { watchlist: { apiId: req.params.movieId } } },
       { new: true }
     );
 

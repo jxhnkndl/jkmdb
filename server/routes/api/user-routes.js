@@ -6,9 +6,14 @@ const {
   searchUsers,
   createUser,
   login,
+  saveMovie,
 } = require('../../controllers/user-controller');
 
-router.route('/').get(authMiddleware, searchUsers).post(createUser);
+router
+  .route('/')
+  .get(authMiddleware, searchUsers)
+  .post(createUser)
+  .put(authMiddleware, saveMovie);
 
 router.route('/me').get(authMiddleware, getMe);
 

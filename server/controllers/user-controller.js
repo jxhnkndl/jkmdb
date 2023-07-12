@@ -65,7 +65,22 @@ module.exports = {
 
   // add friend
 
-  // save movie
+  
+  async saveMovie(req, res) {
+    // find user from id valid token added to req object
+    try {
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: req.user._id },
+        { $addToSet: { watchlist: req.body } },
+        { new: true, runValidators: true }
+      );
+
+      return res.status(200).json({ msg: 'Success', data: updatedUser });
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json({ msg: err });
+    }
+  },
 
   // delete movie
 };

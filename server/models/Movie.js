@@ -6,7 +6,7 @@ const Movie = new Schema(
       type: String,
       required: true
     },
-    rating: {
+    apiRating: {
       type: Number,
       required: true
     },

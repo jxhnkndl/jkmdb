@@ -2,7 +2,6 @@ const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 
 module.exports = {
-  // get logged in user
   async getMe(req, res) {
     const user = await User.findOne({ _id: req.body.id });
 
@@ -10,7 +9,28 @@ module.exports = {
       return res.status(404).json({ msg: 'User not found' });
     }
 
-    res.status(200).json({ msg: 'User found', data: user });
+    res.status(200).json({ msg: 'Success', data: user });
+  },
+
+  async searchUsers(req, res) {
+    // allow for searching useres by username or email address
+    const user = await User.findOne({
+      $or: [{ username: req.body.username }, { email: req.body.email }],
+    });
+
+    if (!user) {
+      if (req.body.email) {
+        return res
+          .status(404)
+          .json({ msg: 'No user with matching email found' });
+      } else {
+        return res
+          .status(404)
+          .json({ msg: 'No user with matching username found' });
+      }
+    }
+
+    res.status(200).json({ msg: 'Success', data: user });
   },
 
   async createUser(req, res) {

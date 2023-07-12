@@ -65,7 +65,6 @@ module.exports = {
 
   // add friend
 
-  
   async saveMovie(req, res) {
     // find user from id valid token added to req object
     try {
@@ -75,7 +74,11 @@ module.exports = {
         { new: true, runValidators: true }
       );
 
-      return res.status(200).json({ msg: 'Success', data: updatedUser });
+      if (!updatedUser) {
+        return res.status(404).json({ msg: 'User not found' });
+      }
+
+      return res.status(200).json({ msg: 'Save successful', data: updatedUser });
     } catch (err) {
       console.log(err);
       return res.status(400).json({ msg: err });
@@ -83,4 +86,19 @@ module.exports = {
   },
 
   // delete movie
+  async deleteMovie(req, res) {
+    // find user from id valid token added to req object
+
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: req.user._id },
+      { $pull: { watchlist: { apiId: req.body.apiId } } },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    return res.status(200).json({ msg: 'Delete successful', data: updatedUser });
+  },
 };

@@ -2,6 +2,10 @@ const { Schema } = require('mongoose');
 
 const Movie = new Schema(
   {
+    apiId: {
+      type: Number,
+      require: true
+    },
     title: {
       type: String,
       required: true

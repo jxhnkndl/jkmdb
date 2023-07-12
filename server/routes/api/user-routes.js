@@ -7,13 +7,15 @@ const {
   createUser,
   login,
   saveMovie,
+  deleteMovie
 } = require('../../controllers/user-controller');
 
 router
   .route('/')
   .get(authMiddleware, searchUsers)
   .post(createUser)
-  .put(authMiddleware, saveMovie);
+  .put(authMiddleware, saveMovie)
+  .delete(authMiddleware, deleteMovie);
 
 router.route('/me').get(authMiddleware, getMe);
 

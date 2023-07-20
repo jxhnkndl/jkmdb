@@ -6,7 +6,7 @@ const {
   searchUsers,
   createUser,
   login,
-  addFriend,
+  followUser,
   saveMovie,
   deleteMovie,
 } = require('../../controllers/user-controller');
@@ -19,7 +19,7 @@ router
   .post(createUser)
   .put(authMiddleware, saveMovie);
 
-router.route('/friends/:friendId').put(authMiddleware, addFriend);
+router.route('/:id/following/:followId').put(authMiddleware, followUser);
 
 router.route('/:movieId').delete(authMiddleware, deleteMovie);
 

@@ -18,9 +18,21 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
+      select: false
     },
     watchlist: [Movie],
-    friends: [],
+    following: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    followers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      }
+    ]
   },
   {
     toJSON: {
@@ -49,9 +61,14 @@ userSchema.virtual('totalSaved').get(function () {
   return this.watchlist.length;
 });
 
-// return number of friends
-userSchema.virtual('totalFriends').get(function () {
-  return this.friends.length;
+// return number of following
+userSchema.virtual('totalFollowing').get(function () {
+  return this.following.length;
+});
+
+// return number of followers
+userSchema.virtual('totalFollowers').get(function () {
+  return this.followers.length;
 });
 
 // create User model

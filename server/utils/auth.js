@@ -16,11 +16,10 @@ module.exports = {
       return res.status(401).json({ msg: 'Invalid token' });
     }
 
-    // use decoded token data to query user and attach user data to req
     try {
-      const decoded = jwt.verify(token, secret, { maxAge: expiration });
+      const { data } = jwt.verify(token, secret, { maxAge: expiration });
 
-      req.user = await User.findById(decoded.data._id);
+      req.user = data;
     } catch (err) {
       console.log('Invalid token');
       console.log(err);

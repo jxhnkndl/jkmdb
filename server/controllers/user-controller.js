@@ -3,8 +3,10 @@ const { signToken } = require('../utils/auth');
 
 module.exports = {
   async getMe(req, res) {
-    if (req.user) {
-      res.status(200).json({ msg: 'Success', data: req.user });
+    const me = await User.findById(req.user._id);
+
+    if (me) {
+      res.status(200).json({ msg: 'Success', data: me });
     } else {
       res.status(404).json({ msg: 'User not found' });
     }
@@ -55,47 +57,29 @@ module.exports = {
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
 
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ email: req.body.email }).select(
+      '+password'
+    );
 
-    if (!user) {
-      return res.status(404).json({ msg: 'User not found' });
-    }
-
-    const isValidPassword = user.checkPassword(req.body.password);
-
-    if (isValidPassword) {
-      const token = signToken(user);
-
-      res.status(200).json({ token, user });
-    } else {
-      res.status(401).json({ msg: 'Invalid credentials' });
-    }
-  },
-
-  async followUser(req, res) {
     try {
-      // add searched user to logged in user's following array
-      const updatedSelf = await User.findOneAndUpdate(
-        { _id: req.user._id },
-        { $addToSet: { following: req.params.followId } },
-        { new: true, runValidators: true }
-      );
+      if (!user) {
+        return res.status(404).json({ msg: 'User not found' });
+      }
 
-      // add logged in user to searched user's followers array
-      const updatedUser = await User.findOneAndUpdate(
-        { _id: req.params.followId },
-        { $addToSet: { followers: req.user._id } },
-        { new: true, runValidators: true }
-      );
+      const isValidPassword = user.checkPassword(password);
 
-      if (updatedSelf && updatedUser) {
-        res.status(200).json({ msg: 'Friend added', data: updatedSelf });
+      if (isValidPassword) {
+        const token = signToken(user);
+
+        console.log(token);
+
+        res.status(200).json({ token, user });
       } else {
-        res.status(404).json({ msg: 'User not found' });
+        res.status(401).json({ msg: 'Invalid credentials' });
       }
     } catch (err) {
       console.log(err);
-      res.status(400).json({ msg: err });
+      return res.status(400).json({ msg: err });
     }
   },
 

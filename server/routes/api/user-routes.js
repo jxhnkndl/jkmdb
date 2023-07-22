@@ -19,10 +19,8 @@ router
   .post(createUser)
   .put(authMiddleware, saveMovie);
 
-router.route('/:id/following/:followId').put(authMiddleware, followUser);
+router.route('/login').post(login);
 
 router.route('/:movieId').delete(authMiddleware, deleteMovie);
-
-router.route('/login').post(login);
 
 module.exports = router;

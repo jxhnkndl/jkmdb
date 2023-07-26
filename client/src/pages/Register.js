@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { BiSolidRightArrow } from 'react-icons/bi';
 
 function Register() {
@@ -43,7 +44,7 @@ function Register() {
               className="input input-bordered input-md w-full"
             />
           </div>
-          <div className="form-control w-full mb-12">
+          <div className="form-control w-full mb-10">
             <div className="label">
               <div className="label-text">Confirm Password</div>
             </div>
@@ -54,9 +55,12 @@ function Register() {
               className="input input-bordered input-md w-full"
             />
           </div>
-          <button type="submit" className="btn btn-block btn-primary">
+          <button type="submit" className="btn btn-block btn-primary mb-6">
             Sign Up
           </button>
+          <Link to='/login' className='hover:underline'>
+            Already have an account? Sign in instead!
+          </Link>
         </form>
       </div>
     </div>

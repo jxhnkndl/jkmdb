@@ -6,7 +6,7 @@ import MovieContext from '../context/movie/MovieContext';
 function ResultCard({ display, data }) {
   const { id, media_type, poster_path, name, title, vote_average } = data;
 
-  const { focusId, dispatch } = useContext(MovieContext);
+  const { dispatch } = useContext(MovieContext);
 
   // update focus show/movie in global state when card is clicked
   const handleIdChange = () => {

@@ -172,6 +172,21 @@ function ShowDetails() {
 
             {/* main content */}
             <div className="col-span-4 md:col-span-2 lg:col-span-3">
+
+              {/* watchlist buttons */}
+              <div className="grid grid-cols-3 gap-x-4 mb-7">
+                <div className="col-span-3 md:col-span-1">
+                  <button className="btn btn-accent btn-block mb-5 shadow">
+                    Add to Watchlist
+                  </button>
+                </div>
+                <div className="col-span-3 md:col-span-1">
+                  <button className="btn btn-block shadow">
+                    Remove from Watchlist
+                  </button>
+                </div>
+              </div>
+              
               {/* genres */}
               {showDetails.genreArr && (
                 <div className="flex flex-wrap text-[10px] sm:text-sm mb-5">

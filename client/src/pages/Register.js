@@ -5,8 +5,10 @@ function Register() {
   return (
     <div className="flex justify-center items-center">
       <div className="w-screen sm:w-1/2 bg-base-200 p-8 rounded-md">
-        <p className="text-4xl mb-4 mr-3 inline">Create Account</p>
-        <BiSolidRightArrow className="text-2xl mb-4 inline" />
+        <div className="mb-2">
+          <p className="text-4xl mb-4 mr-3 inline">Create Account</p>
+          <BiSolidRightArrow className="text-2xl mb-4 inline" />
+        </div>
         <form>
           <div className="form-control w-full mb-4">
             <div className="label">
@@ -52,7 +54,9 @@ function Register() {
               className="input input-bordered input-md w-full"
             />
           </div>
-          <button type="submit" className='btn btn-block btn-primary'>Sign Up</button>
+          <button type="submit" className="btn btn-block btn-primary">
+            Sign Up
+          </button>
         </form>
       </div>
     </div>

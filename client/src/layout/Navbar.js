@@ -14,13 +14,13 @@ function Navbar() {
 
       <ul className='mt-2'>
         <li className="inline mr-6">
-          <Link to="/trending-tv">
-            TV Shows
+          <Link to="/register">
+            Sign Up
           </Link>
         </li>
         <li className="inline">
-          <Link to="/trending-movies">
-            Movies
+          <Link to="/login">
+            Login
           </Link>
         </li>
       </ul>

@@ -46,7 +46,7 @@ function SearchBar() {
   };
 
   return (
-    <form className="flex mb-2" onSubmit={handleSubmit}>
+    <form className="flex mb-2 mb-4" onSubmit={handleSubmit}>
       <input
         type="text"
         placeholder="TV Shows, Movies, People"

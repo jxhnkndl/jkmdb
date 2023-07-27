@@ -21,6 +21,7 @@ export const MovieProvider = ({ children }) => {
     movies: [],
     showDetails: {},
     movieDetails: {},
+    focusId: '',
     searchResults: [],
     searchTerm: '',
     loading: false,

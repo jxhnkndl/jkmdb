@@ -6,6 +6,13 @@ import MovieContainer from '../components/MovieContainer';
 import MovieContext from '../context/movie/MovieContext';
 import { formatSearchTerm } from '../utils/helpers';
 
+import {
+  SET_LOADING_TRUE,
+  SET_LOADING_FALSE,
+  GET_TRENDING,
+  CLEAR_SEARCH,
+} from '../context/movie/movieTypes';
+
 function Home() {
   const {
     tvShows,
@@ -21,14 +28,14 @@ function Home() {
     // get trending tv and movie data from tmdb api when home page loads
     const initMovieState = async () => {
       // update api loading state to true
-      dispatch({ type: 'SET_LOADING_TRUE' });
+      dispatch({ type: SET_LOADING_TRUE });
 
       const tvShows = await fetchTrending(`/trending/tv/day?language=en-US`);
       const movies = await fetchTrending(`/trending/movie/day?language=en-US`);
 
       // update state with response data from both api calls
       dispatch({
-        type: 'GET_TRENDING',
+        type: GET_TRENDING,
         payload: {
           tvShows,
           movies,
@@ -37,7 +44,7 @@ function Home() {
 
       // delay setting loading to false briefly to smooth the transition
       // and ensure all content renders at the same time
-      setTimeout(() => dispatch({ type: 'SET_LOADING_FALSE' }));
+      setTimeout(() => dispatch({ type: SET_LOADING_FALSE }));
     };
 
     initMovieState();
@@ -86,7 +93,7 @@ function Home() {
                 <Link to="/">
                   <button
                     className="btn btn-circle btn-outline btn-xs md:btn-sm mb-4 mr-"
-                    onClick={() => dispatch({ type: 'CLEAR_SEARCH' })}
+                    onClick={() => dispatch({ type: CLEAR_SEARCH })}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

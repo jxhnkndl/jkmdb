@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { setPercentRating, setBadgeColor } from '../utils/helpers';
 import MovieContext from '../context/movie/MovieContext';
 
+import { SET_FOCUS_ID } from '../context/movie/movieTypes';
+
 function ResultCard({ display, data }) {
   const { id, media_type, poster_path, name, title, vote_average } = data;
 
@@ -11,7 +13,7 @@ function ResultCard({ display, data }) {
   // update focus show/movie in global state when card is clicked
   const handleIdChange = () => {
     dispatch({
-      type: 'SET_FOCUS_ID',
+      type: SET_FOCUS_ID,
       payload: id,
     });
   };

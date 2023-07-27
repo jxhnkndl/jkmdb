@@ -16,8 +16,14 @@ import {
   formatDate,
 } from '../utils/helpers';
 
+import {
+  SET_LOADING_TRUE,
+  SET_LOADING_FALSE,
+  SET_SHOW_DETAILS,
+} from '../context/movie/movieTypes';
+
 function ShowDetails() {
-  const { showDetails, loading, dispatch, searchByTitle } =
+  const { showDetails, loading, focusId, dispatch, searchByTitle } =
     useContext(MovieContext);
 
   const { mediaType, id } = useParams();
@@ -25,7 +31,7 @@ function ShowDetails() {
 
   useEffect(() => {
     const fetchDetails = async () => {
-      dispatch({ type: 'SET_LOADING_TRUE' });
+      dispatch({ type: SET_LOADING_TRUE });
 
       const response = await searchByTitle(
         `/tv/${id}?append_to_response=aggregate_credits,recommendations,content_ratings,keywords&language=en-US`
@@ -44,18 +50,17 @@ function ShowDetails() {
       };
 
       dispatch({
-        type: 'SET_SHOW_DETAILS',
+        type: SET_SHOW_DETAILS,
         payload: { ...response, ...formattedDetails },
       });
 
       // delay setting loading to false briefly to smooth the transition
       // and ensure all content renders at the same time
-      setTimeout(() => dispatch({ type: 'SET_LOADING_FALSE' }), 750);
+      setTimeout(() => dispatch({ type: SET_LOADING_FALSE }), 750);
     };
 
     fetchDetails();
-
-  }, []);
+  }, [focusId]);
 
   return (
     <section className="my-8">
@@ -172,7 +177,6 @@ function ShowDetails() {
 
             {/* main content */}
             <div className="col-span-4 md:col-span-2 lg:col-span-3">
-
               {/* watchlist buttons */}
               <div className="grid grid-cols-3 gap-x-4 mb-7">
                 <div className="col-span-3 md:col-span-1">
@@ -186,7 +190,7 @@ function ShowDetails() {
                   </button>
                 </div>
               </div>
-              
+
               {/* genres */}
               {showDetails.genreArr && (
                 <div className="flex flex-wrap text-[10px] sm:text-sm mb-5">

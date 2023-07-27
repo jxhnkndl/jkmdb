@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { setPercentRating, setBadgeColor } from '../utils/helpers';
 import MovieContext from '../context/movie/MovieContext';

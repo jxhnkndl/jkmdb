@@ -1,11 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import MovieContext from '../context/movie/MovieContext';
+import { searchByTitle } from '../context/movie/MovieActions';
 
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const { dispatch, searchByTitle } = useContext(MovieContext);
+  const { dispatch } = useContext(MovieContext);
 
   const navigate = useNavigate();
   const { pathname } = useLocation();

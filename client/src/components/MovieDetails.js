@@ -5,7 +5,7 @@ import Loader from './Loader';
 import CastCard from '../components/CastCard';
 import ResultCard from '../components/ResultCard';
 import MovieContext from '../context/movie/MovieContext';
-
+import { searchByTitle } from '../context/movie/MovieActions';
 import {
   formatGenres,
   getMpaaRating,
@@ -22,8 +22,7 @@ import {
 } from '../context/movie/movieTypes';
 
 function MovieDetails() {
-  const { movieDetails, loading, focusId, dispatch, searchByTitle } =
-    useContext(MovieContext);
+  const { movieDetails, loading, focusId, dispatch } = useContext(MovieContext);
 
   const { mediaType, id } = useParams();
   console.log(mediaType, id);

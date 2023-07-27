@@ -5,7 +5,7 @@ import Loader from '../components/Loader';
 import MovieContainer from '../components/MovieContainer';
 import MovieContext from '../context/movie/MovieContext';
 import { formatSearchTerm } from '../utils/helpers';
-
+import { fetchTrending } from '../context/movie/MovieActions';
 import {
   SET_LOADING_TRUE,
   SET_LOADING_FALSE,
@@ -21,7 +21,6 @@ function Home() {
     searchTerm,
     loading,
     dispatch,
-    fetchTrending,
   } = useContext(MovieContext);
 
   useEffect(() => {

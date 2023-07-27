@@ -4,7 +4,12 @@ import { authReducer } from './AuthReducer';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const initialState = {};
+  const initialState = {
+    user: {},
+    token: '',
+    isLoggedIn: false,
+    loading: false,
+  };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
 

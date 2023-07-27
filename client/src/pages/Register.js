@@ -1,8 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { BiSolidRightArrow } from 'react-icons/bi';
+import AuthContext from '../context/auth/AuthContext';
+import { registerUser } from '../context/auth/AuthActions';
+import {
+  REGISTER_USER,
+  SET_AUTH_LOADING_TRUE,
+  SET_AUTH_LOADING_FALSE,
+} from '../context/auth/authTypes';
 
 function Register() {
+  const [alert, setAlert] = useState({
+    showAlert: false,
+    msg: '',
+  });
+
   const [formData, setFormData] = useState({
     email: '',
     username: '',
@@ -10,7 +22,26 @@ function Register() {
     password2: '',
   });
 
+  const { dispatch } = useContext(AuthContext);
+
   const { email, username, password, password2 } = formData;
+  const { showAlert } = alert;
+
+  const clearAlert = () => {
+    setAlert({
+      showAlert: false,
+      msg: '',
+    });
+  };
+
+  const setFormAlert = (msg) => {
+    setAlert({
+      showAlert: true,
+      msg: msg,
+    });
+
+    setTimeout(() => clearAlert(), 2000);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,12 +52,46 @@ function Register() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newUser = { email, username, password };
+    if (!email) {
+      setFormAlert('Please enter a valid email address');
+      return;
+    }
 
-    console.log(newUser);
+    if (!username) {
+      setFormAlert('Please choose a username');
+      return;
+    }
+
+    if (password.length < 8 || password.length > 24) {
+      setFormAlert('Choose a password between 8 and 24 characters');
+      return;
+    }
+
+    if (password !== password2) {
+      setFormAlert('Password do not match');
+      return;
+    }
+
+    dispatch({ type: SET_AUTH_LOADING_TRUE });
+
+    const userData = await registerUser({ email, username, password });
+
+    console.log(userData)
+
+    dispatch({
+      type: REGISTER_USER,
+      payload: {
+        user: userData.data.newUser,
+        token: userData.data.token,
+      },
+    });
+
+    dispatch({ type: SET_AUTH_LOADING_FALSE });
+
+    console.log('USER CREATED')
   };
 
   return (
@@ -85,9 +150,31 @@ function Register() {
               onChange={handleChange}
             />
           </div>
-          <button type="submit" className="btn btn-block btn-primary mb-6">
-            Sign Up
-          </button>
+
+          {/* conditional alert message for invalid form entries */}
+          {showAlert ? (
+            <div className={`alert alert-warning mb-8 p-4`}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="stroke-current shrink-0 h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                />
+              </svg>
+              <span>{alert.msg}</span>
+            </div>
+          ) : (
+            <button type="submit" className="btn btn-block btn-primary mb-6">
+              Sign Up
+            </button>
+          )}
+
           <Link to="/login" className="hover:underline">
             Already have an account? Sign in instead!
           </Link>

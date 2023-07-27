@@ -25,9 +25,10 @@ module.exports = {
   },
 
   async createUser(req, res) {
-    const { username, email, password } = req.body;
+    console.log(123);
+    const { email, username, password } = req.body.data;
 
-    if (!username || !email || !password) {
+    if (!email || !username || !password) {
       return res
         .status(400)
         .json({ msg: 'Please include all required fields' });
@@ -39,12 +40,16 @@ module.exports = {
       return res.status(400).json({ msg: 'User already exists' });
     }
 
-    const newUser = await User.create(req.body);
+    const newUser = await User.create({
+      email,
+      username,
+      password,
+    });
 
     if (newUser) {
       const token = signToken(newUser);
 
-      res.status(200).json({ token, newUser });
+      res.status(200).json({ msg: 'User created', token, newUser });
     } else {
       res.status(400).json({ msg: 'Failed to create user' });
     }

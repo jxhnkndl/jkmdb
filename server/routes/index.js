@@ -5,8 +5,8 @@ const apiRoutes = require('./api');
 router.use('/api', apiRoutes);
 
 // serve react app in production mode
-router.use((req, res) => {
-  res.sendFile(path.join(__dirname, '../../client/build/index.html'));
-});
+// router.use((req, res) => {
+//   res.sendFile(path.join(__dirname, '../../client/build/index.html'));
+// });
 
 module.exports = router;

@@ -1,6 +1,28 @@
 import axios from 'axios';
 
-const TOKEN = localStorage.getItem('token') || null;
+export const getMe = async () => {
+  let token = localStorage.getItem('token') || null;
+
+  if (!token) {
+    console.log('User not logged in');
+    return;
+  }
+
+  try {
+    const response = await axios.get('/api/users/me', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return {
+      token,
+      user: response.data.data,
+    };
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 export const registerUser = async (newUser) => {
   const data = await axios.post('/api/users', {

@@ -1,5 +1,6 @@
 import {
   REGISTER_USER,
+  LOGIN,
   SET_AUTH_LOADING_TRUE,
   SET_AUTH_LOADING_FALSE,
 } from './authTypes';
@@ -7,6 +8,7 @@ import {
 export const authReducer = (state, action) => {
   switch (action.type) {
     case REGISTER_USER:
+    case LOGIN:
       localStorage.setItem('token', action.payload.token);
       return {
         ...state,
@@ -18,13 +20,13 @@ export const authReducer = (state, action) => {
     case SET_AUTH_LOADING_TRUE:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
 
     case SET_AUTH_LOADING_FALSE:
       return {
         ...state,
-        loading: false
+        loading: false,
       };
 
     default:

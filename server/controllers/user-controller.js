@@ -56,15 +56,13 @@ module.exports = {
   },
 
   async login(req, res) {
-    const { email, password } = req.body;
+    const { email, password } = req.body.data;
 
     if (!email || !password) {
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
 
-    const user = await User.findOne({ email: req.body.email }).select(
-      '+password'
-    );
+    const user = await User.findOne({ email }).select('+password');
 
     try {
       if (!user) {

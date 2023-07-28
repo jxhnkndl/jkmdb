@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { BiSolidRightArrow } from 'react-icons/bi';
 import AuthContext from '../context/auth/AuthContext';
 import { registerUser } from '../context/auth/AuthActions';
@@ -26,6 +26,8 @@ function Register() {
 
   const { email, username, password, password2 } = formData;
   const { showAlert } = alert;
+
+  const navigate = useNavigate();
 
   const clearAlert = () => {
     setAlert({
@@ -91,7 +93,7 @@ function Register() {
 
     dispatch({ type: SET_AUTH_LOADING_FALSE });
 
-    console.log('USER CREATED')
+    navigate('/success');
   };
 
   return (

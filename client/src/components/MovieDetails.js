@@ -1,11 +1,9 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { BiSolidRightArrow } from 'react-icons/bi';
 import Loader from './Loader';
 import CastCard from '../components/CastCard';
 import ResultCard from '../components/ResultCard';
-import MovieContext from '../context/movie/MovieContext';
-import { searchByTitle } from '../context/movie/MovieActions';
 import {
   formatGenres,
   getMpaaRating,
@@ -15,13 +13,19 @@ import {
   formatDate,
 } from '../utils/helpers';
 
+import MovieContext from '../context/movie/MovieContext';
+import { searchByTitle } from '../context/movie/MovieActions';
 import {
   SET_LOADING_TRUE,
   SET_LOADING_FALSE,
   SET_MOVIE_DETAILS,
 } from '../context/movie/movieTypes';
+import { checkToken } from '../context/auth/AuthActions';
 
 function MovieDetails() {
+  // check whether token exists and is still valid to set logged in state
+  const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
+
   const { movieDetails, loading, focusId, dispatch } = useContext(MovieContext);
 
   const { mediaType, id } = useParams();
@@ -163,18 +167,20 @@ function MovieDetails() {
             {/* details */}
             <div className="col-span-4 md:col-span-2 lg:col-span-3">
               {/* watchlist buttons */}
-              <div className="grid grid-cols-3 gap-x-4 mb-7">
-                <div className="col-span-3 md:col-span-1">
-                  <button className="btn btn-accent btn-block mb-5 shadow">
-                    Add to Watchlist
-                  </button>
+              {isLoggedIn && (
+                <div className="grid grid-cols-3 gap-x-4 mb-7">
+                  <div className="col-span-3 md:col-span-1">
+                    <button className="btn btn-accent btn-block mb-5 shadow">
+                      Add to Watchlist
+                    </button>
+                  </div>
+                  <div className="col-span-3 md:col-span-1">
+                    <button className="btn btn-block shadow">
+                      Remove from Watchlist
+                    </button>
+                  </div>
                 </div>
-                <div className="col-span-3 md:col-span-1">
-                  <button className="btn btn-block shadow">
-                    Remove from Watchlist
-                  </button>
-                </div>
-              </div>
+              )}
 
               {/* genres */}
               {movieDetails.genreArr && (

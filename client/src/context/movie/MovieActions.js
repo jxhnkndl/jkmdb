@@ -33,8 +33,6 @@ export const searchByTitle = async (endpoint) => {
 export const saveMovie = async (movie) => {
   let token = localStorage.getItem('token') || null;
 
-  console.log(token);
-
   if (!token) {
     console.log('User not logged in');
     return;
@@ -47,6 +45,32 @@ export const saveMovie = async (movie) => {
         'Content-Type': 'application/json',
       },
     });
+
+    console.log(data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const deleteMovie = async (movieId) => {
+  let token = localStorage.getItem('token') || null;
+
+  if (!token) {
+    console.log('User not logged in');
+    return;
+  }
+
+  try {
+    const data = await axios.put(
+      `/api/users/${movieId}`,
+      { movieId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
     console.log(data);
   } catch (err) {

@@ -10,8 +10,6 @@ function Navbar() {
   const { dispatch } = useContext(MovieContext);
   const { isLoggedIn, dispatch: authDispatch } = useContext(AuthContext);
 
-  console.log(isLoggedIn);
-
   return (
     <nav className="flex justify-between items-center my-4">
       <div>

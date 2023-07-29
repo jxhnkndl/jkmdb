@@ -5,52 +5,17 @@ import Loader from '../components/Loader';
 import MovieContainer from '../components/MovieContainer';
 import { formatSearchTerm } from '../utils/helpers';
 import MovieContext from '../context/movie/MovieContext';
-import AuthContext from '../context/auth/AuthContext';
 import { fetchTrending } from '../context/movie/MovieActions';
-import { getMe } from '../context/auth/AuthActions';
 import {
   SET_LOADING_TRUE,
   SET_LOADING_FALSE,
   GET_TRENDING,
   CLEAR_SEARCH,
 } from '../context/movie/movieTypes';
-import {
-  SET_AUTH_LOADING_TRUE,
-  SET_AUTH_LOADING_FALSE,
-  SET_USER,
-} from '../context/auth/authTypes';
 
 function Home() {
   const { tvShows, movies, searchResults, searchTerm, loading, dispatch } =
     useContext(MovieContext);
-
-  const { isLoggedIn, dispatch: authDispatch } = useContext(AuthContext);
-
-  // check if token exists and set auth state
-  useEffect(() => {
-    const setUser = async () => {
-      if (isLoggedIn) {
-        console.log('User already logged in');
-        return;
-      }
-
-      authDispatch({ type: SET_AUTH_LOADING_TRUE });
-
-      const userData = await getMe();
-
-      authDispatch({
-        type: SET_USER,
-        payload: {
-          token: userData.token,
-          user: userData.user,
-        },
-      });
-
-      authDispatch({ type: SET_AUTH_LOADING_FALSE });
-    };
-
-    setUser();
-  }, []);
 
   // get trending tv and movie data from tmdb api when home page loads
   useEffect(() => {
@@ -75,7 +40,7 @@ function Home() {
       setTimeout(() => dispatch({ type: SET_LOADING_FALSE }));
     };
 
-    // initMovieState();
+    initMovieState();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

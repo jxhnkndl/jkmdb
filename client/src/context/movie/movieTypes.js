@@ -4,5 +4,6 @@ export const CLEAR_SEARCH = 'CLEAR_SEARCH';
 export const SET_SHOW_DETAILS = 'SET_SHOW_DETAILS';
 export const SET_MOVIE_DETAILS = 'SET_MOVIE_DETAILS';
 export const SET_FOCUS_ID = 'SET_FOCUS_ID';
+export const SAVE_MOVIE = 'SAVE_MOVIE';
 export const SET_LOADING_TRUE = 'SET_LOADING_TRUE';
 export const SET_LOADING_FALSE = 'SET_LOADING_FALSE';

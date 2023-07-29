@@ -79,7 +79,7 @@ function Login() {
 
     dispatch({ type: SET_AUTH_LOADING_FALSE });
 
-    navigate('/success');
+    navigate(-1);
   };
 
   return (

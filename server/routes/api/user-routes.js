@@ -21,6 +21,6 @@ router
 
 router.route('/login').post(login);
 
-router.route('/:movieId').delete(authMiddleware, deleteMovie);
+router.route('/:movieId').put(authMiddleware, deleteMovie);
 
 module.exports = router;

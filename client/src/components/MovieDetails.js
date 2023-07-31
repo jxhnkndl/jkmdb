@@ -14,7 +14,11 @@ import {
 } from '../utils/helpers';
 
 import MovieContext from '../context/movie/MovieContext';
-import { searchByTitle, saveMovie, deleteMovie } from '../context/movie/MovieActions';
+import {
+  searchByTitle,
+  saveMovie,
+  deleteMovie,
+} from '../context/movie/MovieActions';
 import {
   SET_LOADING_TRUE,
   SET_LOADING_FALSE,
@@ -24,7 +28,7 @@ import { checkToken } from '../context/auth/AuthActions';
 
 function MovieDetails() {
   // check whether token exists and is still valid to set logged in state
-  const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
+  const [isLoggedIn] = useState(checkToken());
   const [check, setCheck] = useState(false);
   const [icon, setIcon] = useState(false);
 
@@ -85,7 +89,7 @@ function MovieDetails() {
     } catch (err) {
       console.table(err);
     }
-  }
+  };
 
   return (
     <section className="my-8">
@@ -194,21 +198,29 @@ function MovieDetails() {
 
             {/* details */}
             <div className="col-span-4 md:col-span-2 lg:col-span-3">
-
               {/* watchlist buttons */}
               {isLoggedIn && (
                 <div className="grid grid-cols-3 gap-x-4 mb-7">
                   <div className="col-span-3 md:col-span-1">
                     <button
-                      className={`btn ${check ? 'btn-success' : 'btn-accent'} btn-block mb-5 shadow`}
+                      className={`btn ${
+                        check ? 'btn-success' : 'btn-accent'
+                      } btn-block mb-5 shadow`}
                       onClick={handleSave}
                     >
                       Add to Watchlist
-                      {check && <BiCheckCircle className="text-2xl inline ml-1" />}
+                      {check && (
+                        <BiCheckCircle className="text-2xl inline ml-1" />
+                      )}
                     </button>
                   </div>
                   <div className="col-span-3 md:col-span-1">
-                    <button className={`btn btn-block ${icon && 'btn-error'} shadow px-4`} onClick={handleDelete}>
+                    <button
+                      className={`btn btn-block ${
+                        icon && 'btn-error'
+                      } shadow px-4`}
+                      onClick={handleDelete}
+                    >
                       Remove
                       {icon && <BiXCircle className="text-2xl inline ml-1" />}
                     </button>
@@ -273,32 +285,38 @@ function MovieDetails() {
               )}
 
               {/* recommendations */}
-              <div className="flex items-center mb-3">
-                <p className="text-2xl font-semibold mr-2">More Like This</p>
-                <BiSolidRightArrow />
-              </div>
-              {movieDetails.recommendations && (
-                <div className="flex overflow-x-auto whitespace-nowrap mb-10">
-                  {/* render cast cards only for actors with profile photos */}
-                  {movieDetails.recommendations &&
-                    movieDetails.recommendations.results.map(
-                      (result, index) => {
-                        if (result.poster_path) {
-                          return (
-                            <ResultCard
-                              key={`${index}-${result.id}`}
-                              data={result}
-                              display={'row'}
-                            />
-                          );
-                        }
-                      }
-                    )}
-                  {!movieDetails.recommendations && (
-                    <p>Recommendations Unavailable</p>
-                  )}
-                </div>
-              )}
+              {movieDetails.recommendations &&
+                movieDetails.recommendations.results.length > 1 && (
+                  <div>
+                    <div className="flex items-center mb-3">
+                      <p className="text-2xl font-semibold mr-2">
+                        More Like This
+                      </p>
+                      <BiSolidRightArrow />
+                    </div>
+
+                    <div className="flex overflow-x-auto whitespace-nowrap mb-10">
+                      {/* render cast cards only for actors with profile photos */}
+                      {movieDetails.recommendations &&
+                        movieDetails.recommendations.results.map(
+                          (result, index) => {
+                            if (result.poster_path) {
+                              return (
+                                <ResultCard
+                                  key={`${index}-${result.id}`}
+                                  data={result}
+                                  display={'row'}
+                                />
+                              );
+                            }
+                          }
+                        )}
+                      {!movieDetails.recommendations && (
+                        <p>Recommendations Unavailable</p>
+                      )}
+                    </div>
+                  </div>
+                )}
             </div>
           </div>
         </div>

@@ -26,11 +26,11 @@ function ShowDetails() {
   // check whether token exists and is still valid to set logged in state
   const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
   const [check, setCheck] = useState(false);
-  const [x, setX] = useState(false);
+  const [icon, setIcon] = useState(false);
 
   const { showDetails, loading, focusId, dispatch } = useContext(MovieContext);
 
-  const { mediaType, id } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -85,8 +85,8 @@ function ShowDetails() {
   const handleDelete = async () => {
     try {
       await deleteMovie(id);
-      setX(true);
-      setTimeout(() => setX(false), 3000);
+      setIcon(true);
+      setTimeout(() => setIcon(false), 3000);
     } catch (err) {
       console.table(err);
     }
@@ -220,9 +220,9 @@ function ShowDetails() {
                     </button>
                   </div>
                   <div className="col-span-3 md:col-span-1">
-                    <button className={`btn btn-block ${x && 'btn-error'} shadow px-4`} onClick={handleDelete}>
+                    <button className={`btn btn-block ${icon && 'btn-error'} shadow px-4`} onClick={handleDelete}>
                       Remove
-                      {x && <BiXCircle className="text-2xl inline ml-1" />}
+                      {icon && <BiXCircle className="text-2xl inline ml-1" />}
                     </button>
                   </div>
                 </div>

@@ -24,11 +24,10 @@ import {
   SET_LOADING_FALSE,
   SET_SHOW_DETAILS,
 } from '../context/movie/movieTypes';
-import { checkToken } from '../context/auth/AuthActions';
+import Auth from '../utils/auth';
 
 function ShowDetails() {
-  // check whether token exists and is still valid to set logged in state
-  const [isLoggedIn] = useState(checkToken());
+  const [userData, setUserData] = useState({});
   const [check, setCheck] = useState(false);
   const [icon, setIcon] = useState(false);
 
@@ -36,6 +35,27 @@ function ShowDetails() {
 
   const { id } = useParams();
 
+  // get current user
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      if (!Auth.isLoggedIn()) {
+        console.log('User not logged in');
+        return;
+      }
+
+      try {
+        const response = await Auth.getMe();
+
+        setUserData(response);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    fetchCurrentUser();
+  }, [])
+
+  // get show details from tmdb api, format them, and set them into state
   useEffect(() => {
     const fetchDetails = async () => {
       dispatch({ type: SET_LOADING_TRUE });
@@ -212,7 +232,7 @@ function ShowDetails() {
             {/* main content */}
             <div className="col-span-4 md:col-span-2 lg:col-span-3">
               {/* watchlist buttons */}
-              {isLoggedIn && (
+              {Auth.isLoggedIn() && (
                 <div className="grid grid-cols-3 gap-x-4 mb-7">
                   <div className="col-span-3 md:col-span-1">
                     <button
@@ -248,7 +268,7 @@ function ShowDetails() {
                     showDetails.genreArr.map((genre, index) => (
                       <span
                         key={index}
-                        className="font-bold mb-2 mr-3 border p-1"
+                        className="font-bold mb-2 mr-3 border p-2"
                       >
                         {genre}
                       </span>

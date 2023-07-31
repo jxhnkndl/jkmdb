@@ -1,13 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiSolidRightArrow } from 'react-icons/bi';
-import AuthContext from '../context/auth/AuthContext';
-import { registerUser } from '../context/auth/AuthActions';
-import {
-  REGISTER_USER,
-  SET_AUTH_LOADING_TRUE,
-  SET_AUTH_LOADING_FALSE,
-} from '../context/auth/authTypes';
+import Auth from '../utils/auth';
 
 function Register() {
   const [alert, setAlert] = useState({
@@ -21,8 +15,6 @@ function Register() {
     password: '',
     password2: '',
   });
-
-  const { dispatch } = useContext(AuthContext);
 
   const { email, username, password, password2 } = formData;
   const { showAlert } = alert;
@@ -77,21 +69,7 @@ function Register() {
       return;
     }
 
-    dispatch({ type: SET_AUTH_LOADING_TRUE });
-
-    const userData = await registerUser({ email, username, password });
-
-    console.log(userData)
-
-    dispatch({
-      type: REGISTER_USER,
-      payload: {
-        user: userData.data.newUser,
-        token: userData.data.token,
-      },
-    });
-
-    dispatch({ type: SET_AUTH_LOADING_FALSE });
+    await Auth.registerUser({ email, username, password });
 
     navigate(-1);
   };

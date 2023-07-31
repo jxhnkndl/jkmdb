@@ -1,13 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiSolidRightArrow } from 'react-icons/bi';
-import AuthContext from '../context/auth/AuthContext';
-import { login } from '../context/auth/AuthActions';
-import {
-  LOGIN,
-  SET_AUTH_LOADING_TRUE,
-  SET_AUTH_LOADING_FALSE,
-} from '../context/auth/authTypes';
+import Auth from '../utils/auth';
 
 function Login() {
   const [alert, setAlert] = useState({
@@ -19,8 +13,6 @@ function Login() {
     email: '',
     password: '',
   });
-
-  const { dispatch } = useContext(AuthContext);
 
   const { email, password } = formData;
   const { showAlert } = alert;
@@ -65,19 +57,7 @@ function Login() {
       return;
     }
 
-    dispatch({ type: SET_AUTH_LOADING_TRUE });
-
-    const userData = await login({ email, password });
-
-    dispatch({
-      type: LOGIN,
-      payload: {
-        user: userData.data.user,
-        token: userData.data.token,
-      },
-    });
-
-    dispatch({ type: SET_AUTH_LOADING_FALSE });
+    await Auth.login({ email, password });
 
     navigate(-1);
   };

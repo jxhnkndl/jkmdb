@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { BiSolidRightArrow, BiCheckCircle, BiXCircle } from 'react-icons/bi';
 import Loader from './Loader';
+import MovieHeading from './MovieHeading';
 import HeroImage from './HeroImage';
 import CastCard from '../components/CastCard';
 import ResultCard from '../components/ResultCard';
@@ -119,39 +120,14 @@ function MovieDetails() {
       ) : (
         <div>
           {/* heading */}
-          <div className="">
-            <div className="flex justify-between items-center">
-              <h1 className="text-2xl md:text-5xl font-bold mb-3">
-                {movieDetails.title}
-              </h1>
-              <Link to="/">
-                <button className="btn btn-circle btn-outline btn-xs md:btn-sm mb-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 md:h-6 md:w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              </Link>
-            </div>
-            <p className="text-xs md:text-sm">
-              <span className="font-bold mr-3 border p-1">
-                {movieDetails.mpaaRating}
-              </span>
-              {movieDetails.releaseDate} (US) - {movieDetails.runtime} minutes
-            </p>
-          </div>
+          <MovieHeading 
+            title={movieDetails.title}
+            contentRating={movieDetails.mpaaRating}
+            releaseDate={movieDetails.releaseDate}
+            runtime={movieDetails.runtime}
+          />
+          
           {/* hero backdrop */}
-
           <HeroImage
             backdropUrl={movieDetails.backdrop_path}
             posterUrl={movieDetails.poster_path}

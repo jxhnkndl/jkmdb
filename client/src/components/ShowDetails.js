@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { BiSolidRightArrow, BiCheckCircle, BiXCircle } from 'react-icons/bi';
 import Loader from './Loader';
+import MovieHeading from './MovieHeading';
 import HeroImage from './HeroImage';
 import CastCard from '../components/CastCard';
 import ResultCard from '../components/ResultCard';
@@ -34,7 +35,8 @@ function ShowDetails() {
 
   const { showDetails, loading, focusId, dispatch } = useContext(MovieContext);
 
-  const { id } = useParams();
+  const { id, mediaType } = useParams();
+  console.log(mediaType)
 
   // get current user
   useEffect(() => {
@@ -124,39 +126,11 @@ function ShowDetails() {
       ) : (
         <div>
           {/* heading */}
-          <div className="">
-            <div className="flex justify-between items-center">
-              <h1 className="text-2xl md:text-5xl font-bold mb-3">
-                {showDetails.name}
-              </h1>
-              <Link to="/">
-                <button className="btn btn-circle btn-outline btn-xs md:btn-sm mb-4 mr-">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 md:h-6 md:w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              </Link>
-            </div>
-            {showDetails.contentRating && (
-              <p className="text-xs md:text-sm">
-                <span className="font-bold mr-3 border p-1">
-                  {showDetails.contentRating}
-                </span>
-                TV Series ({showDetails.airDates})
-              </p>
-            )}
-          </div>
+          <MovieHeading
+            title={showDetails.name}
+            contentRating={showDetails.contentRating}
+            airDates={showDetails.airDates}
+          />
 
           {/* hero backdrop */}
           <HeroImage

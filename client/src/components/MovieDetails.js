@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { BiSolidRightArrow, BiCheckCircle, BiXCircle } from 'react-icons/bi';
 import Loader from './Loader';
+import HeroImage from './HeroImage';
 import CastCard from '../components/CastCard';
 import ResultCard from '../components/ResultCard';
 import {
@@ -149,27 +150,13 @@ function MovieDetails() {
               {movieDetails.releaseDate} (US) - {movieDetails.runtime} minutes
             </p>
           </div>
-
           {/* hero backdrop */}
-          <div
-            className="grid grid-cols-3 w-auto min-h-200 md:min-h-350 lg:min-h-400 bg-center lg:bg-top my-6"
-            style={{
-              backgroundImage: `url(https://image.tmdb.org/t/p/w1280/${movieDetails.backdrop_path})`,
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover',
-            }}
-          >
-            {/* poster */}
-            <div className="col-span-1">
-              <figure>
-                <img
-                  className="w-72 m-4 border-4 border-base-300 shadow-2xl shadow-base-300"
-                  src={`https://image.tmdb.org/t/p/w342/${movieDetails.poster_path}`}
-                  alt={`${movieDetails.name} poster`}
-                />
-              </figure>
-            </div>
-          </div>
+
+          <HeroImage
+            backdropUrl={movieDetails.backdrop_path}
+            posterUrl={movieDetails.poster_path}
+            title={movieDetails.name}
+          />
 
           {/* main content */}
           <div className="grid grid-cols-3 lg:grid-cols-4 gap-8">

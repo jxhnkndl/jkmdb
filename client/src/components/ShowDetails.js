@@ -4,6 +4,7 @@ import { BiSolidRightArrow, BiCheckCircle, BiXCircle } from 'react-icons/bi';
 import Loader from './Loader';
 import MovieHeading from './MovieHeading';
 import HeroImage from './HeroImage';
+import Stat from './Stat';
 import CastCard from '../components/CastCard';
 import ResultCard from '../components/ResultCard';
 import {
@@ -36,7 +37,7 @@ function ShowDetails() {
   const { showDetails, loading, focusId, dispatch } = useContext(MovieContext);
 
   const { id, mediaType } = useParams();
-  console.log(mediaType)
+  console.log(mediaType);
 
   // get current user
   useEffect(() => {
@@ -141,51 +142,31 @@ function ShowDetails() {
 
           {/* main content */}
           <div className="grid grid-cols-3 lg:grid-cols-4 gap-8">
+
             {/* stats */}
             <aside className="col-span-4 md:col-span-1">
               <div className="stats stats-vertical min-w-full bg-base-200 shadow-lg">
-                {/* content rating */}
                 {showDetails.contentRating && (
-                  <div className="stat text-center md:text-left">
-                    <div className="stat-title">Rating</div>
-                    <div
-                      className={`stat-value ${setTextColor(
-                        showDetails.contentRating
-                      )}`}
-                    >
-                      {showDetails.contentRating}
-                    </div>
-                    <div className="stat-desc">For mature audiences</div>
-                  </div>
+                  <Stat
+                    title={'Content Rating'}
+                    value={showDetails.contentRating}
+                    textColor={setTextColor(showDetails.contentRating)}
+                  />
                 )}
-
-                {/* user rating */}
-                <div className="stat text-center md:text-left">
-                  <div className="stat-title">User Rating</div>
-                  <div
-                    className={`stat-value ${setBadgeColor(
-                      showDetails.percentRating,
-                      'text'
-                    )}`}
-                  >
-                    {showDetails.percentRating}%
-                  </div>
-                  <div className="stat-desc">
-                    Based on {showDetails.vote_count} votes
-                  </div>
-                </div>
-
-                {/* seasons */}
+                {showDetails.percentRating && (
+                  <Stat
+                    title={'User Rating'}
+                    value={`${showDetails.percentRating}%`}
+                    description={`Based on ${showDetails.vote_count} votes`}
+                    textColor={setBadgeColor(showDetails.percentRating, 'text')}
+                  />
+                )}
                 {showDetails.number_of_seasons && (
-                  <div className="stat text-center md:text-left">
-                    <div className="stat-title">Seasons</div>
-                    <div className="stat-value">
-                      {showDetails.number_of_seasons}
-                    </div>
-                    <div className="stat-desc">
-                      {showDetails.number_of_episodes} total episodes
-                    </div>
-                  </div>
+                  <Stat
+                    title={'Seasons'}
+                    value={showDetails.number_of_seasons}
+                    description={`${showDetails.number_of_episodes} episodes`}
+                  />
                 )}
               </div>
             </aside>

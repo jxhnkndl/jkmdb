@@ -4,6 +4,7 @@ import { BiSolidRightArrow, BiCheckCircle, BiXCircle } from 'react-icons/bi';
 import Loader from './Loader';
 import MovieHeading from './MovieHeading';
 import HeroImage from './HeroImage';
+import Stat from './Stat';
 import CastCard from '../components/CastCard';
 import ResultCard from '../components/ResultCard';
 import {
@@ -52,10 +53,10 @@ function MovieDetails() {
       } catch (err) {
         console.log(err);
       }
-    }
+    };
 
     fetchCurrentUser();
-  }, [])
+  }, []);
 
   // get movie details from tmdb api, format them, and set them into state
   useEffect(() => {
@@ -120,13 +121,13 @@ function MovieDetails() {
       ) : (
         <div>
           {/* heading */}
-          <MovieHeading 
+          <MovieHeading
             title={movieDetails.title}
             contentRating={movieDetails.mpaaRating}
             releaseDate={movieDetails.releaseDate}
             runtime={movieDetails.runtime}
           />
-          
+
           {/* hero backdrop */}
           <HeroImage
             backdropUrl={movieDetails.backdrop_path}
@@ -139,42 +140,29 @@ function MovieDetails() {
             {/* stats */}
             <aside className="col-span-4 md:col-span-1">
               <div className="stats stats-vertical min-w-full bg-base-200 shadow-lg">
-                {/* MPAA rating */}
-                <div className="stat text-center md:text-left">
-                  <div className="stat-title">Rating</div>
-                  <div
-                    className={`stat-value ${setTextColor(
-                      movieDetails.mpaaRating
-                    )}`}
-                  >
-                    {movieDetails.mpaaRating}
-                  </div>
-                </div>
-
-                {/* user rating */}
-                <div className="stat text-center md:text-left">
-                  <div className="stat-title">User Rating</div>
-                  <div
-                    className={`stat-value ${setBadgeColor(
+                {movieDetails.mpaaRating && (
+                  <Stat
+                    title={'Content Rating'}
+                    value={movieDetails.mpaaRating}
+                    textColor={setTextColor(movieDetails.mpaaRating)}
+                  />
+                )}
+                {movieDetails.percentRating && (
+                  <Stat
+                    title={'User Rating'}
+                    value={`${movieDetails.percentRating}%`}
+                    description={`Based on ${movieDetails.vote_count} votes`}
+                    textColor={setBadgeColor(
                       movieDetails.percentRating,
                       'text'
-                    )}`}
-                  >
-                    {movieDetails.percentRating}%
-                  </div>
-                  <div className="stat-desc">
-                    Based on {movieDetails.vote_count} votes
-                  </div>
-                </div>
-
-                {/* runtime */}
+                    )}
+                  />
+                )}
                 {movieDetails.runtime && (
-                  <div className="stat text-center md:text-left">
-                    <div className="stat-title">Runtime</div>
-                    <div className="stat-value">
-                      {movieDetails.runtime} mins
-                    </div>
-                  </div>
+                  <Stat
+                    title={'Runtime'}
+                    value={`${movieDetails.runtime} mins`}
+                  />
                 )}
               </div>
             </aside>

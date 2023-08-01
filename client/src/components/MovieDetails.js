@@ -5,6 +5,7 @@ import Loader from './Loader';
 import MovieHeading from './MovieHeading';
 import HeroImage from './HeroImage';
 import Stat from './Stat';
+import Genres from './Genres';
 import CastCard from '../components/CastCard';
 import ResultCard from '../components/ResultCard';
 import {
@@ -201,17 +202,7 @@ function MovieDetails() {
 
               {/* genres */}
               {movieDetails.genreArr && (
-                <div className="flex flex-wrap text-[10px] sm:text-sm mb-5">
-                  {movieDetails.genreArr &&
-                    movieDetails.genreArr.map((genre, index) => (
-                      <span
-                        key={index}
-                        className="font-bold mb-2 mr-3 border p-2"
-                      >
-                        {genre}
-                      </span>
-                    ))}
-                </div>
+                <Genres genres={movieDetails.genreArr} />
               )}
 
               {/* tagline */}

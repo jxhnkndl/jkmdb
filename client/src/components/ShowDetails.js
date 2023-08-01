@@ -5,6 +5,7 @@ import Loader from './Loader';
 import MovieHeading from './MovieHeading';
 import HeroImage from './HeroImage';
 import Stat from './Stat';
+import Genres from './Genres';
 import CastCard from '../components/CastCard';
 import ResultCard from '../components/ResultCard';
 import {
@@ -142,7 +143,6 @@ function ShowDetails() {
 
           {/* main content */}
           <div className="grid grid-cols-3 lg:grid-cols-4 gap-8">
-
             {/* stats */}
             <aside className="col-span-4 md:col-span-1">
               <div className="stats stats-vertical min-w-full bg-base-200 shadow-lg">
@@ -204,19 +204,7 @@ function ShowDetails() {
               )}
 
               {/* genres */}
-              {showDetails.genreArr && (
-                <div className="flex flex-wrap text-[10px] sm:text-sm mb-5">
-                  {showDetails.genreArr &&
-                    showDetails.genreArr.map((genre, index) => (
-                      <span
-                        key={index}
-                        className="font-bold mb-2 mr-3 border p-2"
-                      >
-                        {genre}
-                      </span>
-                    ))}
-                </div>
-              )}
+              {showDetails.genreArr && <Genres genres={showDetails.genreArr} />}
 
               {/* tagline */}
               {showDetails.tagline && (

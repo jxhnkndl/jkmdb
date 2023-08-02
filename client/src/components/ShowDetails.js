@@ -7,7 +7,8 @@ import HeroImage from './HeroImage';
 import Stat from './Stat';
 import Genres from './Genres';
 import NetworkList from './NetworkList';
-import CastCard from '../components/CastCard';
+import Credits from './Credits';
+import Recommendations from './Recommendations';
 import ResultCard from '../components/ResultCard';
 import {
   formatAirDates,
@@ -245,20 +246,7 @@ function ShowDetails() {
                 <p className="text-2xl font-semibold mr-2">Series Cast</p>
                 <BiSolidRightArrow />
               </div>
-              <div className="flex overflow-x-auto whitespace-nowrap mb-6">
-                {/* render cast cards only for actors with profile photos */}
-                {showDetails.aggregate_credits &&
-                  showDetails.aggregate_credits.cast.map((actor, index) => {
-                    if (actor.profile_path) {
-                      return (
-                        <CastCard key={`${index}-${actor.id}`} data={actor} />
-                      );
-                    }
-                  })}
-                {!showDetails.aggregate_credits && (
-                  <p className="mb-10">Cast Details Unavailable</p>
-                )}
-              </div>
+              <Credits credits={showDetails.aggregate_credits} />
 
               {/* recommendations */}
               {showDetails.recommendations &&

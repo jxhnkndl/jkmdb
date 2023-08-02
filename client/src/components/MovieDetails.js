@@ -6,6 +6,7 @@ import MovieHeading from './MovieHeading';
 import HeroImage from './HeroImage';
 import Stat from './Stat';
 import Genres from './Genres';
+import Credits from './Credits';
 import CastCard from '../components/CastCard';
 import ResultCard from '../components/ResultCard';
 import {
@@ -232,18 +233,7 @@ function MovieDetails() {
                 <BiSolidRightArrow />
               </div>
               {movieDetails.credits && (
-                <div className="flex overflow-x-auto whitespace-nowrap mb-6">
-                  {/* render cast cards only for actors with profile photos */}
-                  {movieDetails.credits &&
-                    movieDetails.credits.cast.map((actor, index) => {
-                      if (actor.profile_path) {
-                        return (
-                          <CastCard key={`${index}-${actor.id}`} data={actor} />
-                        );
-                      }
-                    })}
-                  {!movieDetails.credits && <p>Recommendations Unavailable</p>}
-                </div>
+                <Credits credits={movieDetails.credits} />
               )}
 
               {/* recommendations */}

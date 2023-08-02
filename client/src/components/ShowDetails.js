@@ -6,6 +6,7 @@ import MovieHeading from './MovieHeading';
 import HeroImage from './HeroImage';
 import Stat from './Stat';
 import Genres from './Genres';
+import NetworkList from './NetworkList';
 import CastCard from '../components/CastCard';
 import ResultCard from '../components/ResultCard';
 import {
@@ -234,19 +235,10 @@ function ShowDetails() {
                 <p className="text-2xl font-semibold mr-2">Watch On</p>
                 <BiSolidRightArrow />
               </div>
-              <div className="flex items-center mb-10">
-                {showDetails.networks &&
-                  showDetails.networks.map((network, index) => (
-                    <div key={network.id} className="mr-4">
-                      <img
-                        className="max-h-10"
-                        src={`https://image.tmdb.org/t/p/w154/${network.logo_path}`}
-                        alt={`Watch ${showDetails.name} on ${network.name}`}
-                      />
-                    </div>
-                  ))}
-                {!showDetails.networks && <p>Networks Unavailable</p>}
-              </div>
+              <NetworkList
+                networks={showDetails.networks}
+                title={showDetails.name}
+              />
 
               {/* cast */}
               <div className="flex items-center mb-3">

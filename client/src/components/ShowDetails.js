@@ -5,6 +5,7 @@ import Loader from './Loader';
 import MovieHeading from './MovieHeading';
 import HeroImage from './HeroImage';
 import Stat from './Stat';
+import SectionHeading from './SectionHeading';
 import Genres from './Genres';
 import NetworkList from './NetworkList';
 import Credits from './Credits';
@@ -216,48 +217,29 @@ function ShowDetails() {
               )}
 
               {/* overview */}
-              <div className="flex items-center mb-3">
-                <p className="text-2xl font-semibold mr-2">Overview</p>
-                <BiSolidRightArrow />
-              </div>
+              <SectionHeading heading={'Overview'} />
               <p className="mb-10">{showDetails.overview}</p>
 
               {/* latest episode */}
-              <div className="flex items-center mb-3">
-                <p className="text-2xl font-semibold mr-2">
-                  Last Episode Aired
-                </p>
-                <BiSolidRightArrow />
-              </div>
+              <SectionHeading heading={'Last Episode Aired'} />
               <p className="mb-10">{formatDate(showDetails.last_air_date)}</p>
 
               {/* networks */}
-              <div className="flex items-center mb-3">
-                <p className="text-2xl font-semibold mr-2">Watch On</p>
-                <BiSolidRightArrow />
-              </div>
+              <SectionHeading heading={'Available On'} />
               <NetworkList
                 networks={showDetails.networks}
                 title={showDetails.name}
               />
 
               {/* cast */}
-              <div className="flex items-center mb-3">
-                <p className="text-2xl font-semibold mr-2">Series Cast</p>
-                <BiSolidRightArrow />
-              </div>
+              <SectionHeading heading={'Cast'} />
               <Credits credits={showDetails.aggregate_credits} />
 
               {/* recommendations */}
               {showDetails.recommendations &&
                 showDetails.recommendations.results.length > 1 && (
                   <>
-                    <div className="flex items-center mb-3">
-                      <p className="text-2xl font-semibold mr-2">
-                        More Like This
-                      </p>
-                      <BiSolidRightArrow />
-                    </div>
+                    <SectionHeading heading={'More Like This'} />
                     <Recommendations
                       recommendations={showDetails.recommendations}
                     />

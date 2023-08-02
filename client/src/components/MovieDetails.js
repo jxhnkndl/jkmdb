@@ -5,6 +5,7 @@ import Loader from './Loader';
 import MovieHeading from './MovieHeading';
 import HeroImage from './HeroImage';
 import Stat from './Stat';
+import SectionHeading from './SectionHeading';
 import Genres from './Genres';
 import Credits from './Credits';
 import Recommendations from './Recommendations';
@@ -214,24 +215,15 @@ function MovieDetails() {
               )}
 
               {/* overview */}
-              <div className="flex items-center mb-3">
-                <p className="text-2xl font-semibold mr-2">Overview</p>
-                <BiSolidRightArrow />
-              </div>
+              <SectionHeading heading={'Overview'} />
               <p className="mb-10">{movieDetails.overview}</p>
 
               {/* release date */}
-              <div className="flex items-center mb-3">
-                <p className="text-2xl font-semibold mr-2">Release Date (US)</p>
-                <BiSolidRightArrow />
-              </div>
+              <SectionHeading heading={'Release Date (US)'} />
               <p className="mb-10">{formatDate(movieDetails.release_date)}</p>
 
               {/* cast */}
-              <div className="flex items-center mb-3">
-                <p className="text-2xl font-semibold mr-2">Series Cast</p>
-                <BiSolidRightArrow />
-              </div>
+              <SectionHeading heading={'Cast'} />
               {movieDetails.credits && (
                 <Credits credits={movieDetails.credits} />
               )}
@@ -240,12 +232,7 @@ function MovieDetails() {
               {movieDetails.recommendations &&
                 movieDetails.recommendations.results.length > 1 && (
                   <>
-                    <div className="flex items-center mb-3">
-                      <p className="text-2xl font-semibold mr-2">
-                        More Like This
-                      </p>
-                      <BiSolidRightArrow />
-                    </div>
+                    <SectionHeading heading={'More Like This'} />
                     <Recommendations
                       recommendations={movieDetails.recommendations}
                     />

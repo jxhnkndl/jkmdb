@@ -7,7 +7,7 @@ import HeroImage from './HeroImage';
 import Stat from './Stat';
 import Genres from './Genres';
 import Credits from './Credits';
-import CastCard from '../components/CastCard';
+import Recommendations from './Recommendations';
 import ResultCard from '../components/ResultCard';
 import {
   formatGenres,
@@ -239,35 +239,17 @@ function MovieDetails() {
               {/* recommendations */}
               {movieDetails.recommendations &&
                 movieDetails.recommendations.results.length > 1 && (
-                  <div>
+                  <>
                     <div className="flex items-center mb-3">
                       <p className="text-2xl font-semibold mr-2">
                         More Like This
                       </p>
                       <BiSolidRightArrow />
                     </div>
-
-                    <div className="flex overflow-x-auto whitespace-nowrap mb-10">
-                      {/* render cast cards only for actors with profile photos */}
-                      {movieDetails.recommendations &&
-                        movieDetails.recommendations.results.map(
-                          (result, index) => {
-                            if (result.poster_path) {
-                              return (
-                                <ResultCard
-                                  key={`${index}-${result.id}`}
-                                  data={result}
-                                  display={'row'}
-                                />
-                              );
-                            }
-                          }
-                        )}
-                      {!movieDetails.recommendations && (
-                        <p>Recommendations Unavailable</p>
-                      )}
-                    </div>
-                  </div>
+                    <Recommendations
+                      recommendations={movieDetails.recommendations}
+                    />
+                  </>
                 )}
             </div>
           </div>

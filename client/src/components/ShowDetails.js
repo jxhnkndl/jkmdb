@@ -251,34 +251,17 @@ function ShowDetails() {
               {/* recommendations */}
               {showDetails.recommendations &&
                 showDetails.recommendations.results.length > 1 && (
-                  <div>
+                  <>
                     <div className="flex items-center mb-3">
                       <p className="text-2xl font-semibold mr-2">
                         More Like This
                       </p>
                       <BiSolidRightArrow />
                     </div>
-                    <div className="flex overflow-x-auto whitespace-nowrap mb-10">
-                      {/* render cast cards only for actors with profile photos */}
-                      {showDetails.recommendations &&
-                        showDetails.recommendations.results.map(
-                          (result, index) => {
-                            if (result.poster_path) {
-                              return (
-                                <ResultCard
-                                  key={`${index}-${result.id}`}
-                                  data={result}
-                                  display={'row'}
-                                />
-                              );
-                            }
-                          }
-                        )}
-                      {!showDetails.recommendations && (
-                        <p>Recommendations Unavailable</p>
-                      )}
-                    </div>
-                  </div>
+                    <Recommendations
+                      recommendations={showDetails.recommendations}
+                    />
+                  </>
                 )}
             </div>
           </div>

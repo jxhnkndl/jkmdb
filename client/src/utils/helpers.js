@@ -77,10 +77,13 @@ export const getContentRating = (ratingsArr) => {
   return 'Unknown'
 };
 
+
+// extract US MPAA rating from ratings arr
 export const getMpaaRating = (ratingsArr) => {
   return ratingsArr.find((rating) => rating.iso_3166_1 === 'US')
     .release_dates[0].certification;
 };
+
 
 // set text or badge collor
 export const setTextColor = (rating) => {
@@ -103,6 +106,7 @@ export const formatGenres = (genreArr) => {
   return genreArr.map((genre) => genre.name);
 };
 
+
 // create roles string
 export const formatRoles = (roles) => {
   // movies return strings
@@ -123,6 +127,7 @@ export const formatRoles = (roles) => {
 
   return result;
 };
+
 
 // create keywords string
 export const formatKeywords = (keywords) => {

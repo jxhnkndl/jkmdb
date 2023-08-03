@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { BiSolidRightArrow, BiCheckCircle, BiXCircle } from 'react-icons/bi';
+import { useParams } from 'react-router-dom';
 import Loader from './Loader';
 import MovieHeading from './MovieHeading';
 import HeroImage from './HeroImage';
 import Stat from './Stat';
+import Button from './Button';
 import SectionHeading from './SectionHeading';
 import Genres from './Genres';
 import NetworkList from './NetworkList';
 import Credits from './Credits';
 import Recommendations from './Recommendations';
-import ResultCard from '../components/ResultCard';
 import {
   formatAirDates,
   formatGenres,
@@ -35,8 +34,7 @@ import Auth from '../utils/auth';
 
 function ShowDetails() {
   const [userData, setUserData] = useState({});
-  const [check, setCheck] = useState(false);
-  const [icon, setIcon] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   const { showDetails, loading, focusId, dispatch } = useContext(MovieContext);
 
@@ -53,6 +51,15 @@ function ShowDetails() {
 
       try {
         const response = await Auth.getMe();
+
+        // disable save button if title has already been saved
+        const isSaved = response.user.watchlist.filter(
+          (title) => title.apiId === parseInt(id)
+        );
+
+        if (isSaved.length > 0) {
+          setIsSaved(true);
+        }
 
         setUserData(response);
       } catch (err) {
@@ -107,8 +114,7 @@ function ShowDetails() {
 
     try {
       await saveMovie(movie);
-      setCheck(true);
-      setTimeout(() => setCheck(false), 3000);
+      setIsSaved(true);
     } catch (err) {
       console.log(err);
     }
@@ -117,8 +123,7 @@ function ShowDetails() {
   const handleDelete = async () => {
     try {
       await deleteMovie(id);
-      setIcon(true);
-      setTimeout(() => setIcon(false), 3000);
+      setIsSaved(false);
     } catch (err) {
       console.table(err);
     }
@@ -179,30 +184,20 @@ function ShowDetails() {
               {/* watchlist buttons */}
               {Auth.isLoggedIn() && (
                 <div className="grid grid-cols-3 gap-x-4 mb-7">
-                  <div className="col-span-3 md:col-span-1">
-                    <button
-                      className={`btn ${
-                        check ? 'btn-success' : 'btn-accent'
-                      } btn-block mb-5 shadow`}
-                      onClick={handleSave}
-                    >
-                      Add to Watchlist
-                      {check && (
-                        <BiCheckCircle className="text-2xl inline ml-1" />
-                      )}
-                    </button>
-                  </div>
-                  <div className="col-span-3 md:col-span-1">
-                    <button
-                      className={`btn btn-block ${
-                        icon && 'btn-error'
-                      } shadow px-4`}
-                      onClick={handleDelete}
-                    >
-                      Remove
-                      {icon && <BiXCircle className="text-2xl inline ml-1" />}
-                    </button>
-                  </div>
+                  {!isSaved && (
+                    <Button
+                      text={'Add to Watchlist'}
+                      color={'accent'}
+                      clickHandler={handleSave}
+                    />
+                  )}
+                  {isSaved && (
+                    <Button
+                      text={'Remove'}
+                      color={'error'}
+                      clickHandler={handleDelete}
+                    />
+                  )}
                 </div>
               )}
 

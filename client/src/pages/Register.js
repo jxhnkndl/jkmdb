@@ -99,7 +99,7 @@ function Register() {
   };
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center mt-24">
       <div className="w-screen sm:w-1/2 bg-base-200 p-8 rounded-md">
         <div className="mb-2">
           <p className="text-4xl mb-4 mr-3 inline">Create Account</p>

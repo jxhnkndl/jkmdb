@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiSolidRightArrow } from 'react-icons/bi';
 import Auth from '../utils/auth';
@@ -17,6 +17,9 @@ function Login() {
   const { email, password } = formData;
   const { showAlert } = alert;
 
+  const emailInput = useRef(null);
+  const passwordInput = useRef(null);
+
   const navigate = useNavigate();
 
   const clearAlert = () => {
@@ -32,7 +35,7 @@ function Login() {
       msg: msg,
     });
 
-    setTimeout(() => clearAlert(), 2000);
+    setTimeout(() => clearAlert(), 2500);
   };
 
   const handleChange = (e) => {
@@ -57,9 +60,24 @@ function Login() {
       return;
     }
 
-    await Auth.login({ email, password });
+    try {
+      await Auth.login({ email, password });
 
-    navigate(-1);
+      navigate(-1);
+    } catch (err) {
+      setFormAlert('Invalid credentials');
+
+      // reset focus on email input
+      emailInput.current.focus();
+      passwordInput.current.blur();
+
+      setFormData({
+        email: '',
+        password: ''
+      });
+
+      console.log(err);
+    }
   };
 
   return (
@@ -80,6 +98,7 @@ function Login() {
               className="input input-md w-full"
               value={email}
               onChange={handleChange}
+              ref={emailInput}
             />
           </div>
           <div className="form-control w-full mb-10">
@@ -92,12 +111,13 @@ function Login() {
               className="input input-md w-full"
               value={password}
               onChange={handleChange}
+              ref={passwordInput}
             />
           </div>
 
           {/* conditional alert message for invalid form entries */}
           {showAlert ? (
-            <div className={`alert alert-warning mb-8 p-4`}>
+            <div className={`alert alert-warning mb-6 p-3`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="stroke-current shrink-0 h-6 w-6"

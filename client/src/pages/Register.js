@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiSolidRightArrow } from 'react-icons/bi';
 import Auth from '../utils/auth';
@@ -18,6 +18,11 @@ function Register() {
 
   const { email, username, password, password2 } = formData;
   const { showAlert } = alert;
+
+  const emailInput = useRef(null);
+  const usernameInput = useRef(null);
+  const passwordInput = useRef(null);
+  const password2Input = useRef(null);
 
   const navigate = useNavigate();
 
@@ -69,9 +74,28 @@ function Register() {
       return;
     }
 
-    await Auth.registerUser({ email, username, password });
+    try {
+      await Auth.registerUser({ email, username, password });
 
-    navigate(-1);
+      navigate(-1);
+    } catch (err) {
+      setFormAlert('Something went wrong!');
+
+      // reset focus on email input
+      emailInput.current.focus();
+      usernameInput.current.blur();
+      passwordInput.current.blur();
+      password2Input.current.blur();
+
+      setFormData({
+        email: '',
+        username: '',
+        password: '',
+        password2: ''
+      });
+
+      console.log(err);
+    }
   };
 
   return (
@@ -133,7 +157,7 @@ function Register() {
 
           {/* conditional alert message for invalid form entries */}
           {showAlert ? (
-            <div className={`alert alert-warning mb-8 p-4`}>
+            <div className={`alert alert-warning mb-6 p-3`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="stroke-current shrink-0 h-6 w-6"

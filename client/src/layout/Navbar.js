@@ -33,11 +33,19 @@ function Navbar() {
             </li>
           </>
         ) : (
-          <li className="inline">
-            <Link to="/" onClick={Auth.logout}>
-              Logout
-            </Link>
-          </li>
+          <>
+            <li className="inline mr-6">
+              <Link to="/profile">
+                Profile
+              </Link>
+            </li>
+
+            <li className="inline">
+              <Link to="/" onClick={Auth.logout}>
+                Logout
+              </Link>
+            </li>
+          </>
         )}
       </ul>
     </nav>

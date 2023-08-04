@@ -37,7 +37,7 @@ function MovieDetails() {
 
   const { movieDetails, loading, focusId, dispatch } = useContext(MovieContext);
 
-  const { id } = useParams();
+  const { id, mediaType } = useParams();
 
   // get current user
   useEffect(() => {
@@ -100,6 +100,7 @@ function MovieDetails() {
   const handleSave = async () => {
     const movie = {
       apiId: id,
+      mediaType: mediaType,
       title: movieDetails.title,
       apiRating: movieDetails.percentRating,
       posterUrl: movieDetails.poster_path,

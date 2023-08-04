@@ -6,6 +6,10 @@ const Movie = new Schema(
       type: Number,
       require: true
     },
+    mediaType: {
+      type: String,
+      required: true
+    },
     title: {
       type: String,
       required: true

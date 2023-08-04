@@ -3,11 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
 import Stat from '../components/Stat';
 import MovieContainer from '../components/MovieContainer';
+import EmptyWatchlist from '../components/EmptyWatchlist';
 import Auth from '../utils/auth';
+import { deleteMovie } from '../context/movie/MovieActions';
 
 function Profile() {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [refetch, setRefetch] = useState(true);
 
   const navigate = useNavigate();
 
@@ -31,7 +34,16 @@ function Profile() {
     };
 
     fetchCurrentUser();
-  }, []);
+  }, [refetch]);
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteMovie(id);
+      setRefetch((prev) => !prev);
+    } catch (err) {
+      console.table(err);
+    }
+  };
 
   return (
     <section className="my-8">
@@ -54,9 +66,13 @@ function Profile() {
           {/* watchlist */}
           <div className="col-span-4 lg:col-span-3">
             {userData.user.watchlist && userData.user.watchlist.length > 0 ? (
-              <MovieContainer display={'grid'} data={userData.user.watchlist} />
+              <MovieContainer
+                display={'grid'}
+                data={userData.user.watchlist}
+                handleDelete={handleDelete}
+              />
             ) : (
-              <p>Nothing Saved</p>
+              <EmptyWatchlist />
             )}
           </div>
         </div>

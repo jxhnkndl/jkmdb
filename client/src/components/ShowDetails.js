@@ -107,6 +107,7 @@ function ShowDetails() {
   const handleSave = async () => {
     const movie = {
       apiId: id,
+      mediaType: mediaType,
       title: showDetails.name,
       apiRating: showDetails.percentRating,
       posterUrl: showDetails.poster_path,

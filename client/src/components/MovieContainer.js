@@ -4,7 +4,7 @@ import ResultCard from './ResultCard';
 import SavedCard from './SavedCard';
 import { filterResults, limitResults } from '../utils/helpers';
 
-function MovieContainer({ display, limit, data }) {
+function MovieContainer({ display, limit, data, handleDelete }) {
   const location = useLocation();
 
   // remove titles that don't have a poster for the
@@ -49,6 +49,7 @@ function MovieContainer({ display, limit, data }) {
               display={'grid'}
               key={`${index}-${result.id}`}
               data={result}
+              handleDelete={handleDelete}
             />
           ))}
         </div>

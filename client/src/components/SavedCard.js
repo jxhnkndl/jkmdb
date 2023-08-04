@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import Button from './Button';
 import { setBadgeColor } from '../utils/helpers';
 import MovieContext from '../context/movie/MovieContext';
-
 import { SET_FOCUS_ID } from '../context/movie/movieTypes';
 
-function ResultCard({ display, data }) {
-  const { apiId, title, apiRating, posterUrl } = data;
-  console.log(data);
+function ResultCard({ display, data, handleDelete }) {
+  const { apiId, mediaType, title, apiRating, posterUrl } = data;
 
   const { dispatch } = useContext(MovieContext);
 
@@ -25,12 +24,9 @@ function ResultCard({ display, data }) {
   return (
     <div
       onClick={handleIdChange}
-      className={`card flex flex-col justify-between mr-4 bg-base-200 shadow-xl mb-6 ${
-        // determine card sizing based on whether display mode is grid or row
-        display === 'grid' ? `w-auto lg:w-auto` : `shrink-0 w-40 lg:w-48`
-      }`}
+      className={`card flex flex-col justify-between mr-4 bg-base-200 shadow-xl mb-6 w-auto lg:w-auto`}
     >
-      <Link to={`/${'temp'}/${apiId}`}>
+      <Link to={`/${mediaType}/${apiId}`}>
         <figure onClick={handleIdChange}>
           <img
             src={`https://image.tmdb.org/t/p/w342/${posterUrl}`}
@@ -43,6 +39,13 @@ function ResultCard({ display, data }) {
           <h2 className="text-1xl truncate">{title}</h2>
         </div>
         <div className={`badge ${ratingBadge} ml-4`}>{`${apiRating}%`}</div>
+      </div>
+      <div className="mx-4 mt-2">
+        <Button
+          text={'Remove'}
+          color={'error'}
+          clickHandler={() => handleDelete(apiId)}
+        />
       </div>
     </div>
   );

@@ -69,12 +69,10 @@ module.exports = {
         return res.status(404).json({ msg: 'User not found' });
       }
 
-      const isValidPassword = user.checkPassword(password);
+      const isValidPassword = await user.checkPassword(password);
 
       if (isValidPassword) {
         const token = signToken(user);
-
-        console.log(token);
 
         res.status(200).json({ token, user });
       } else {

@@ -79,15 +79,16 @@ function ShowDetails() {
         `/tv/${id}?append_to_response=aggregate_credits,recommendations,content_ratings,keywords&language=en-US`
       );
 
+      console.log(response.content_ratings)
+
       const formattedDetails = {
         airDates: formatAirDates(
           response.first_air_date,
           response.last_air_date
         ),
         genreArr: formatGenres(response.genres),
-        contentRating: getContentRating(
-          response.content_ratings.results || 'Unknown'
-        ),
+        contentRating:
+          getContentRating(response.content_ratings.results),
         percentRating: setPercentRating(response.vote_average),
       };
 

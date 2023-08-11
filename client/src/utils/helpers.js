@@ -8,14 +8,12 @@ export const formatSearchTerm = (searchTerm) => {
     .join(' ');
 };
 
-
 // filter out titles without a poster path or vote average
 export const filterResults = (resultsArr) => {
   return resultsArr.filter(
     (result) => result.poster_path && result.vote_average
   );
 };
-
 
 // limit movie, cast, or recommendation results to display
 export const limitResults = (data, limit) => {
@@ -30,12 +28,10 @@ export const limitResults = (data, limit) => {
   return results;
 };
 
-
 // create date string
 export const formatDate = (date) => {
   return dayjs(date).format('MMMM D, YYYY');
 };
-
 
 // format air dates for tv series details
 export const formatAirDates = (debutYear, endYear) => {
@@ -45,10 +41,8 @@ export const formatAirDates = (debutYear, endYear) => {
   return `${startDate}-${latestDate}`;
 };
 
-
 // calculate rating percentage
 export const setPercentRating = (voteAvg) => Math.floor(voteAvg * 10);
-
 
 // create rating badge based on rating percentage
 export const setBadgeColor = (rating, type) => {
@@ -67,23 +61,20 @@ export const setBadgeColor = (rating, type) => {
   }
 };
 
-
 // extract US content rating from ratings array
 export const getContentRating = (ratingsArr) => {
   if (ratingsArr.length > 0) {
-    return  ratingsArr.find((rating) => rating.iso_3166_1 === 'US').rating;
+    return ratingsArr.find((rating) => rating.iso_3166_1 === 'US')?.rating;
+  } else {
+    return 'Unknown';
   }
-
-  return 'Unknown'
 };
-
 
 // extract US MPAA rating from ratings arr
 export const getMpaaRating = (ratingsArr) => {
   return ratingsArr.find((rating) => rating.iso_3166_1 === 'US')
     .release_dates[0].certification;
 };
-
 
 // set text or badge collor
 export const setTextColor = (rating) => {
@@ -100,12 +91,10 @@ export const setTextColor = (rating) => {
   }
 };
 
-
 // format genre string
 export const formatGenres = (genreArr) => {
   return genreArr.map((genre) => genre.name);
 };
-
 
 // create roles string
 export const formatRoles = (roles) => {
@@ -127,7 +116,6 @@ export const formatRoles = (roles) => {
 
   return result;
 };
-
 
 // create keywords string
 export const formatKeywords = (keywords) => {

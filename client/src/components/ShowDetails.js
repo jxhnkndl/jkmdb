@@ -79,7 +79,7 @@ function ShowDetails() {
         `/tv/${id}?append_to_response=aggregate_credits,recommendations,content_ratings,keywords&language=en-US`
       );
 
-      console.log(response.content_ratings)
+      console.log(response.content_ratings);
 
       const formattedDetails = {
         airDates: formatAirDates(
@@ -87,8 +87,7 @@ function ShowDetails() {
           response.last_air_date
         ),
         genreArr: formatGenres(response.genres),
-        contentRating:
-          getContentRating(response.content_ratings.results),
+        contentRating: getContentRating(response.content_ratings.results),
         percentRating: setPercentRating(response.vote_average),
       };
 
@@ -188,20 +187,10 @@ function ShowDetails() {
               {/* watchlist buttons */}
               {Auth.isLoggedIn() && (
                 <div className="grid grid-cols-3 gap-x-4 mb-7">
-                  {!isSaved && (
-                    <Button
-                      text={'Add to Watchlist'}
-                      color={'accent'}
-                      clickHandler={handleSave}
-                    />
-                  )}
-                  {isSaved && (
-                    <Button
-                      text={'Remove'}
-                      color={'error'}
-                      clickHandler={handleDelete}
-                    />
-                  )}
+                  <Button
+                    isSaved={isSaved}
+                    clickHandler={isSaved ? handleDelete : handleSave}
+                  />
                 </div>
               )}
 

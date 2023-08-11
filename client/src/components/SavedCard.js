@@ -42,8 +42,7 @@ function ResultCard({ display, data, handleDelete }) {
       </div>
       <div className="mx-4 mt-2">
         <Button
-          text={'Remove'}
-          color={'error'}
+          isSaved={true}
           clickHandler={() => handleDelete(apiId)}
         />
       </div>

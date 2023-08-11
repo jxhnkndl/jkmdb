@@ -183,20 +183,10 @@ function MovieDetails() {
               {/* watchlist buttons */}
               {Auth.isLoggedIn() && (
                 <div className="grid grid-cols-3 gap-x-4 mb-7">
-                  {!isSaved && (
-                    <Button
-                      text={'Add to Watchlist'}
-                      color={'accent'}
-                      clickHandler={handleSave}
-                    />
-                  )}
-                  {isSaved && (
-                    <Button
-                      text={'Remove'}
-                      color={'error'}
-                      clickHandler={handleDelete}
-                    />
-                  )}
+                  <Button
+                    isSaved={isSaved}
+                    clickHandler={isSaved ? handleDelete : handleSave}
+                  />
                 </div>
               )}
 

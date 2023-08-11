@@ -7,7 +7,7 @@
     "start": "node server.js",
     "watch": "nodemon server.js"
   },
-  "author": "",
+  "author": "jxhnkndl",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",

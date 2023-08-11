@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import Loader from '../components/Loader';
 import MovieContainer from '../components/MovieContainer';
 import MovieContext from '../context/movie/MovieContext';
 
@@ -7,9 +8,11 @@ function TrendingTV() {
   const { tvShows, loading } = useContext(MovieContext);
 
   return (
-    <div>
+    <div className="flex-grow flex flex-col">
       {loading ? (
-        <p className="text-3xl">LOADING...</p>
+        <div className="flex-grow flex justify-center items-center">
+          <Loader />
+        </div>
       ) : (
         <section className="my-10">
           <div className="flex justify-between items-center">

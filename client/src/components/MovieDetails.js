@@ -124,9 +124,11 @@ function MovieDetails() {
   };
 
   return (
-    <section className="my-8">
+    <section className="my-8 flex-grow flex flex-col">
       {loading || !movieDetails ? (
-        <Loader />
+        <div className="flex-grow flex justify-center items-center">
+          <Loader />
+        </div>
       ) : (
         <div>
           {/* heading */}

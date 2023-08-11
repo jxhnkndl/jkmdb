@@ -46,9 +46,11 @@ function Home() {
   }, []);
 
   return (
-    <div>
+    <div className='flex-grow flex flex-col'>
       {loading ? (
-        <Loader />
+        <div className="flex-grow flex justify-center items-center">
+          <Loader />
+        </div>
       ) : (
         <section>
           {/* only display the first row of trending tv results

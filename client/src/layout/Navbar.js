@@ -8,6 +8,12 @@ import Auth from '../utils/auth';
 function Navbar() {
   const { dispatch } = useContext(MovieContext);
 
+  const handleLogout = () => {
+    dispatch({type: 'CLEAR_SEARCH'});
+
+    Auth.logout();
+  }
+
   return (
     <nav className="flex justify-between items-center my-4">
       <div>
@@ -41,7 +47,7 @@ function Navbar() {
             </li>
 
             <li className="inline">
-              <Link to="/" onClick={Auth.logout}>
+              <Link to="/" onClick={handleLogout}>
                 Logout
               </Link>
             </li>

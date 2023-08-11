@@ -70,7 +70,7 @@ function Register() {
     }
 
     if (password !== password2) {
-      setFormAlert('Password do not match');
+      setFormAlert('Passwords do not match');
       return;
     }
 

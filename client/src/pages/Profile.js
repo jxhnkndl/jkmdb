@@ -46,25 +46,19 @@ function Profile() {
   };
 
   return (
-    <section className="my-8">
+    <section className="mt-8 mb-24 flex-grow flex justify-center items-center">
       {loading || !userData ? (
         <Loader />
       ) : (
-        <div className="grid grid-cols-4 gap-8">
-          {/* user stats */}
-          <div className="col-span-4 lg:col-span-1">
-            <div className="card bg-base-200 shadow-xl">
-              <Stat title={'Welcome Back'} value={userData.user.username} />
-              <Stat title={'Email'} value={userData.user.email} />
-              <Stat
-                title={'Total Saved'}
-                value={userData.user.watchlist.length}
-              />
-            </div>
-          </div>
-
+        <div className="grid grid-cols-1 gap-8">
           {/* watchlist */}
-          <div className="col-span-4 lg:col-span-3">
+          <div className="col-span-1">
+            <p className="text-center text-4xl md:text-5xl ">
+              Welcome back{' '}
+              <span className=" font-semibold ">{userData.user.username}</span>!
+            </p>
+          </div>
+          <div className="col-span-1">
             {userData.user.watchlist && userData.user.watchlist.length > 0 ? (
               <MovieContainer
                 display={'grid'}
@@ -72,7 +66,7 @@ function Profile() {
                 handleDelete={handleDelete}
               />
             ) : (
-              <EmptyWatchlist />
+              <EmptyWatchlist username={userData.user.username} />
             )}
           </div>
         </div>

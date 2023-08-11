@@ -5,8 +5,8 @@ import { BiCameraMovie } from 'react-icons/bi';
 function EmptyWatchlist() {
   return (
     <div className="flex justify-center items-center min-h-full">
-      <div className="text-center mt-4 lg:mt-0">
-        <p className="text-3xl lg:text-5xl font-bold mb-4">Nothing Saved!</p>
+      <div className="text-center lg:mt-0">
+        <p className="text-3xl lg:text-3xl font-bold mb-2">Your watchlist is empty!</p>
         <BiCameraMovie className="text-9xl inline mb-4" />
         <p className='text-1xl'>
           Check out {' '}

@@ -57,6 +57,8 @@ function MovieDetails() {
 
         if (isSaved.length > 0) {
           setIsSaved(true);
+        } else {
+          setIsSaved(false);
         }
 
         setUserData(response);
@@ -66,7 +68,7 @@ function MovieDetails() {
     };
 
     fetchCurrentUser();
-  }, []);
+  }, [focusId]);
 
   // get movie details from tmdb api, format them, and set them into state
   useEffect(() => {

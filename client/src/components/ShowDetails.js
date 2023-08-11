@@ -59,6 +59,8 @@ function ShowDetails() {
 
         if (isSaved.length > 0) {
           setIsSaved(true);
+        } else {
+          setIsSaved(false);
         }
 
         setUserData(response);
@@ -68,7 +70,7 @@ function ShowDetails() {
     };
 
     fetchCurrentUser();
-  }, []);
+  }, [focusId]);
 
   // get show details from tmdb api, format them, and set them into state
   useEffect(() => {
@@ -78,8 +80,6 @@ function ShowDetails() {
       const response = await searchByTitle(
         `/tv/${id}?append_to_response=aggregate_credits,recommendations,content_ratings,keywords&language=en-US`
       );
-
-      console.log(response.content_ratings);
 
       const formattedDetails = {
         airDates: formatAirDates(

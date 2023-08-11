@@ -1,10 +1,10 @@
 import React from 'react';
 
-function Stat({ title, value, description, textColor }) {
+function Stat({ title, size, value, description, textColor }) {
   return (
     <div className="stat text-center md:text-left">
       <div className="stat-title">{title}</div>
-      <div className={`stat-value ${textColor ? textColor : ''}`}>{value}</div>
+      <div className={`stat-value ${textColor ? textColor : ''} ${size}`}>{value}</div>
       {description && <div className="stat-desc">{description}</div>}
     </div>
   );

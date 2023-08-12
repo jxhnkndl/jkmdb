@@ -50,7 +50,7 @@ function SearchBar() {
     <form className="flex mb-4" onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="TV Shows, Movies, People"
+        placeholder="Search by Title"
         className="input w-full mr-2"
         value={searchTerm}
         onChange={handleChange}
